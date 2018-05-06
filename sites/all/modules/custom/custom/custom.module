@@ -94,9 +94,13 @@ function custom_timer_form($form, &$form_state) {
  */
 function custom_timer_ajax_callback($form, &$form_state) {
   global $user;
+
+  // Save timestamp when user can click the button again.
   $user->timer = time() + 30 * 60;
+  // Save food ID to user.
+  $user->food .= rand(1, 16) . ',';
+
   user_save($user);
-  // @todo Give random ingredient.
 
   return drupal_get_form('custom_timer_form');
 }

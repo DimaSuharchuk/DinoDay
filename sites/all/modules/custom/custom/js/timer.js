@@ -4,7 +4,7 @@
             const timer = $('.active-timer', context).text().split(':');
             let min = Number.parseInt(timer[0]);
             let sec = Number.parseInt(timer[1]);
-            if (min) {
+            if (min || sec) {
                 const interval = setInterval(function () {
                     sec--;
 
