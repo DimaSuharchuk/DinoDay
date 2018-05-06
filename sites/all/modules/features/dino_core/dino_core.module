@@ -15,6 +15,7 @@ define('DINO_THEME_NAME', 'dino');
 function dino_core_block_info_alter(&$blocks, $theme, $code_blocks) {
   // Configure default blocks.
   $blocks['system']['navigation']['status'] = FALSE;
+  $blocks['system']['powered-by']['status'] = FALSE;
   $blocks['user']['login']['region'] = 'content';
 }
 
