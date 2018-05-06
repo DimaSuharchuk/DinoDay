@@ -1,0 +1,4 @@
+name = DinoDay custom
+description = Custom functionality for site
+core = 7.x
+package = Custom

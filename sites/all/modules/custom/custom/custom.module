@@ -1,0 +1,100 @@
+<?php
+/**
+ * @file
+ * Custom functionality for DinoDay site.
+ */
+
+/**
+ * Implements hook_block_info().
+ */
+function custom_block_info() {
+  $blocks = [];
+
+  $blocks['timer'] = [
+    'info' => 'Timer',
+    'cache' => DRUPAL_NO_CACHE,
+    'weight' => -1,
+    'status' => TRUE,
+    'region' => 'header',
+  ];
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function custom_block_view($delta = '') {
+  $block = [];
+  switch ($delta) {
+    case 'timer':
+      $block['content'] = drupal_get_form('custom_timer_form');
+      break;
+  }
+  return $block;
+}
+
+/**
+ * Form with button and timer if button clicked.
+ *
+ * @param $form
+ * @param $form_state
+ *
+ * @return mixed
+ * @throws \Exception
+ */
+function custom_timer_form($form, &$form_state) {
+  global $user;
+
+  if ($user->timer <= time()) {
+    $form['start_timer'] = [
+      '#type' => 'button',
+      '#value' => 'Получить ингредиент',
+      '#ajax' => [
+        'callback' => 'custom_timer_ajax_callback',
+        'wrapper' => 'custom-timer-form',
+        'method' => 'replace',
+        'effect' => 'fade',
+      ],
+    ];
+  }
+  else {
+    $form['timer'] = [
+      '#markup' => theme('html_tag', [
+        'element' => [
+          '#tag' => 'h2',
+          '#attributes' => [
+            'class' => 'active-timer',
+          ],
+          '#value' => date('i:s', $user->timer - time()),
+        ],
+      ]),
+    ];
+  }
+
+  $form['#attached'] = [
+    'js' => [
+      drupal_get_path('module', 'custom') . '/js/timer.js',
+    ],
+  ];
+
+  return $form;
+}
+
+/**
+ * Ajax callback for timer form.
+ *
+ * @param $form
+ * @param $form_state
+ *
+ * @return array|mixed
+ * @throws \Exception
+ */
+function custom_timer_ajax_callback($form, &$form_state) {
+  global $user;
+  $user->timer = time() + 30 * 60;
+  user_save($user);
+  // @todo Give random ingredient.
+
+  return drupal_get_form('custom_timer_form');
+}
