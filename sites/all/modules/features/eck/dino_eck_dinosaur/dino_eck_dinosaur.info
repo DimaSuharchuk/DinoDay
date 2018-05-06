@@ -1,0 +1,8 @@
+name = Dino: ECK: Dinosaur
+core = 7.x
+package = Features
+dependencies[] = eck
+dependencies[] = features
+features[eck_bundle][] = dinosaur_dinosaur
+features[eck_entity_type][] = dinosaur
+features[features_api][] = api:2

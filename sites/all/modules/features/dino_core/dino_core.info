@@ -1,0 +1,21 @@
+name = DinoDay Core
+description = Enable and disable all modules and themes for site installation.
+core = 7.x
+package = ACore
+
+; Contrib modules.
+dependencies[] = features
+dependencies[] = jquery_update
+; Constrib modules need to disable on production.
+dependencies[] = admin_menu
+dependencies[] = adminimal_admin_menu
+dependencies[] = devel
+dependencies[] = module_filter
+
+; Custom modules.
+dependencies[] = custom
+dependencies[] = dino_entities
+
+; Features.
+dependencies[] = dino_eck_dinosaur
+dependencies[] = dino_eck_food

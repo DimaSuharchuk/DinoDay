@@ -1,0 +1,31 @@
+<?php
+/**
+ * @file
+ * Module's main file.
+ */
+
+/**
+ * Defines site main theme name.
+ */
+define('DINO_THEME_NAME', 'dino');
+
+/**
+ * Implements hook_block_info_alter().
+ */
+function dino_core_block_info_alter(&$blocks, $theme, $code_blocks) {
+  // Configure default blocks.
+  $blocks['system']['navigation']['status'] = FALSE;
+  $blocks['user']['login']['region'] = 'content';
+}
+
+/**
+ * Implements hook_schema_alter().
+ */
+function dino_core_schema_alter(&$schema) {
+  $schema['users']['fields']['timer'] = [
+    'description' => 'The Unix timestamp saved time when the timer should be completed.',
+    'type' => 'int',
+    'not null' => TRUE,
+    'default' => 0,
+  ];
+}
