@@ -13,6 +13,7 @@ dependencies[] = devel
 dependencies[] = module_filter
 
 ; Custom modules.
+dependencies[] = batch_items
 dependencies[] = custom
 dependencies[] = dino_entities
 

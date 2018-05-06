@@ -1,0 +1,494 @@
+<?php
+/**
+ * @file
+ * Saving dinosaurs and food to DB.
+ */
+
+/**
+ * Defines path to directory with dinosaurs pictures.
+ */
+define('DINO_PICTURE_DIR', drupal_get_path('theme', 'dino') . '/images/dino');
+/**
+ * Defines path to directory with food pictures.
+ */
+define('FOOD_PICTURE_DIR', drupal_get_path('theme', 'dino') . '/images/food');
+
+/**
+ * Implements hook_menu().
+ */
+function batch_items_menu() {
+  return [
+    'admin/settings/batch' => [
+      'title' => 'Batch',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => ['batch_items_form'],
+      'access arguments' => ['administer content'],
+    ],
+  ];
+}
+
+/**
+ * Form with button for batch starting.
+ *
+ * @param $form
+ * @param $form_state
+ *
+ * @return mixed
+ */
+function batch_items_form($form, &$form_state) {
+  $form['start'] = [
+    '#type' => 'submit',
+    '#value' => t('Add dinosaurs and food'),
+  ];
+
+  return $form;
+}
+
+/**
+ * Batch form submit.
+ *
+ * @param $form
+ * @param $form_state
+ */
+function batch_items_form_submit($form, &$form_state) {
+  $operations = [];
+
+  foreach (_get_dinosaurs() as $i => $dinosaur) {
+    $operations[] = [
+      'batch_items_dinosaurs_batch',
+      [
+        $dinosaur,
+        t('(Operation @operation)', ['@operation' => $i]),
+      ],
+    ];
+  }
+  foreach (_get_food() as $i => $food) {
+    $operations[] = [
+      'batch_items_food_batch',
+      [
+        $food,
+        t('(Operation @operation)', ['@operation' => $i]),
+      ],
+    ];
+  }
+
+  $batch = [
+    'operations' => $operations,
+    'finished' => 'batch_items_batch_finished',
+  ];
+
+  batch_set($batch);
+}
+
+/**
+ * Batch operations with dinosaurs.
+ */
+function batch_items_dinosaurs_batch($dinosaur, $operation_details, &$context) {
+  $entity = entity_create('dinosaur', ['type' => 'dinosaur']);
+  $wrapper = entity_metadata_wrapper('dinosaur', $entity);
+  $wrapper->picture->set($dinosaur['picture']);
+  $wrapper->name->set($dinosaur['name']);
+  $wrapper->grade->set($dinosaur['grade']);
+  $wrapper->lifetime->set($dinosaur['lifetime']);
+  $wrapper->food_type->set($dinosaur['food_type']);
+  $wrapper->favorite_food->set($dinosaur['favorite_food']);
+  $wrapper->save();
+
+  $context['results']['count']++;
+}
+
+/**
+ * Batch operations with food.
+ */
+function batch_items_food_batch($food, $operation_details, &$context) {
+  $entity = entity_create('food', ['type' => 'food']);
+  $wrapper = entity_metadata_wrapper('food', $entity);
+  $wrapper->picture->set($food['picture']);
+  $wrapper->food_type->set($food['food_type']);
+  $wrapper->name->set($food['name']);
+  $wrapper->save();
+
+  $context['results']['count']++;
+}
+
+/**
+ * Batch finish function.
+ *
+ * @param $success
+ * @param $results
+ * @param $operations
+ */
+function batch_items_batch_finished($success, $results, $operations) {
+  if ($success) {
+    drupal_set_message(
+      format_plural(
+        $results['count'],
+        '1 element was created.',
+        '@count elements were created.'
+      )
+    );
+  }
+  else {
+    $error_operation = reset($operations);
+    drupal_set_message(
+      t('An error occurred while processing @operation with arguments : @args',
+        [
+          '@operation' => $error_operation[0],
+          '@args' => print_r($error_operation[0], TRUE),
+        ]
+      ),
+      'error'
+    );
+  }
+}
+
+/**
+ * Helper function returns array with all dinosaurs.
+ *
+ * @return array
+ */
+function _get_dinosaurs() {
+  $dinosaurs = [];
+
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/1/alamozavr.svg',
+    'name' => 'Аламозавр',
+    'grade' => 1,
+    'lifetime' => 3 * 24 * 3600, // 3 days
+    'food_type' => 'Фрукты',
+    'favorite_food' => 'Яблоко',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/1/amurozavr.svg',
+    'name' => 'Амурозавр',
+    'grade' => 1,
+    'lifetime' => 3 * 24 * 3600, // 3 days
+    'food_type' => 'Морепродукты',
+    'favorite_food' => 'Лящ',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/1/brahiozavr.svg',
+    'name' => 'Брахиозавр',
+    'grade' => 1,
+    'lifetime' => 3 * 24 * 3600, // 3 days
+    'food_type' => 'Мясо',
+    'favorite_food' => 'Бекон',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/1/cherepozavr.svg',
+    'name' => 'Черепозавр',
+    'grade' => 1,
+    'lifetime' => 3 * 24 * 3600, // 3 days
+    'food_type' => 'Фрукты',
+    'favorite_food' => 'Фига',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/1/izizavr.svg',
+    'name' => 'Изизавр',
+    'grade' => 1,
+    'lifetime' => 3 * 24 * 3600, // 3 days
+    'food_type' => 'Морепродукты',
+    'favorite_food' => 'Осьминог',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/1/kusatops.svg',
+    'name' => 'Кусатопс',
+    'grade' => 1,
+    'lifetime' => 3 * 24 * 3600, // 3 days
+    'food_type' => 'Мясо',
+    'favorite_food' => 'Курочка',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/1/mapuzavr.svg',
+    'name' => 'Мапузавр',
+    'grade' => 1,
+    'lifetime' => 3 * 24 * 3600, // 3 days
+    'food_type' => 'Овощи',
+    'favorite_food' => 'Брокколи',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/1/mimizavr.svg',
+    'name' => 'Мимизавр',
+    'grade' => 1,
+    'lifetime' => 3 * 24 * 3600, // 3 days
+    'food_type' => 'Фрукты',
+    'favorite_food' => 'Груша',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/1/pamparaptor.svg',
+    'name' => 'Пампараптор',
+    'grade' => 1,
+    'lifetime' => 3 * 24 * 3600, // 3 days
+    'food_type' => 'Морепродукты',
+    'favorite_food' => 'Лосось',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/1/pentidrako.svg',
+    'name' => 'Пентидрако',
+    'grade' => 1,
+    'lifetime' => 3 * 24 * 3600, // 3 days
+    'food_type' => 'Фрукты',
+    'favorite_food' => 'Ананас',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/1/plateozavr.svg',
+    'name' => 'Платеозавр',
+    'grade' => 1,
+    'lifetime' => 3 * 24 * 3600, // 3 days
+    'food_type' => 'Мясо',
+    'favorite_food' => 'Окорок',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/1/tryceratops.svg',
+    'name' => 'Трицератопс',
+    'grade' => 1,
+    'lifetime' => 3 * 24 * 3600, // 3 days
+    'food_type' => 'Морепродукты',
+    'favorite_food' => 'Креветка',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/1/tsaraptor.svg',
+    'name' => 'Цараптор',
+    'grade' => 1,
+    'lifetime' => 3 * 24 * 3600, // 3 days
+    'food_type' => 'Мясо',
+    'favorite_food' => 'Стейк',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/1/tselur.svg',
+    'name' => 'Целюр',
+    'grade' => 1,
+    'lifetime' => 3 * 24 * 3600, // 3 days
+    'food_type' => 'Овощи',
+    'favorite_food' => 'Капуста',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/1/yamatseratops.svg',
+    'name' => 'Ямацератопс',
+    'grade' => 1,
+    'lifetime' => 3 * 24 * 3600, // 3 days
+    'food_type' => 'Овощи',
+    'favorite_food' => 'Морковка',
+  ];
+  // 2
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/2/diplodoc.svg',
+    'name' => 'Диплодок',
+    'grade' => 2,
+    'lifetime' => 6 * 24 * 3600, // 6 days
+    'food_type' => 'Фрукты',
+    'favorite_food' => 'Яблоко',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/2/kapitozavr.svg',
+    'name' => 'Капитозавр',
+    'grade' => 2,
+    'lifetime' => 6 * 24 * 3600, // 6 days
+    'food_type' => 'Фрукты',
+    'favorite_food' => 'Фига',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/2/lokozavr.svg',
+    'name' => 'Локозавр',
+    'grade' => 2,
+    'lifetime' => 6 * 24 * 3600, // 6 days
+    'food_type' => 'Фрукты',
+    'favorite_food' => 'Груша',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/2/minozavr.svg',
+    'name' => 'Минозавр',
+    'grade' => 2,
+    'lifetime' => 6 * 24 * 3600, // 6 days
+    'food_type' => 'Морепродукты',
+    'favorite_food' => 'Лящ',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/2/multizavr.svg',
+    'name' => 'Мультизавр',
+    'grade' => 2,
+    'lifetime' => 6 * 24 * 3600, // 6 days
+    'food_type' => 'Морепродукты',
+    'favorite_food' => 'Осьминог',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/2/pentatseratops.svg',
+    'name' => 'Пентацератопс',
+    'grade' => 2,
+    'lifetime' => 6 * 24 * 3600, // 6 days
+    'food_type' => 'Мясо',
+    'favorite_food' => 'Бекон',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/2/stegozavr.svg',
+    'name' => 'Стегозавр',
+    'grade' => 2,
+    'lifetime' => 6 * 24 * 3600, // 6 days
+    'food_type' => 'Овощи',
+    'favorite_food' => 'Томат',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/2/superzavr.svg',
+    'name' => 'Суперзавр',
+    'grade' => 2,
+    'lifetime' => 6 * 24 * 3600, // 6 days
+    'food_type' => 'Овощи',
+    'favorite_food' => 'Брокколи',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/2/uranozavr.svg',
+    'name' => 'Уранозавр',
+    'grade' => 2,
+    'lifetime' => 6 * 24 * 3600, // 6 days
+    'food_type' => 'Овощи',
+    'favorite_food' => 'Капуста',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/2/zahazmozavr.svg',
+    'name' => 'Захазмозавр',
+    'grade' => 2,
+    'lifetime' => 6 * 24 * 3600, // 6 days
+    'food_type' => 'Мясо',
+    'favorite_food' => 'Курочка',
+  ];
+  // 3
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/3/brontozavr.svg',
+    'name' => 'Бронтозавр',
+    'grade' => 3,
+    'lifetime' => 12 * 24 * 3600, // 12 days
+    'food_type' => 'Фрукты',
+    'favorite_food' => 'Ананас',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/3/shypast.svg',
+    'name' => 'Шипаст',
+    'grade' => 3,
+    'lifetime' => 12 * 24 * 3600, // 12 days
+    'food_type' => 'Морепродукты',
+    'favorite_food' => 'Лосось',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/3/skalozavr.svg',
+    'name' => 'Скалозавр',
+    'grade' => 3,
+    'lifetime' => 12 * 24 * 3600, // 12 days
+    'food_type' => 'Овощи',
+    'favorite_food' => 'Морковка',
+  ];
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/3/tyranozavr.svg',
+    'name' => 'Тиранозавр',
+    'grade' => 3,
+    'lifetime' => 12 * 24 * 3600, // 12 days
+    'food_type' => 'Мясо',
+    'favorite_food' => 'Окорок',
+  ];
+  // 4
+  $dinosaurs[] = [
+    'picture' => DINO_PICTURE_DIR . '/4/nanotyran.svg',
+    'name' => 'Нанотиран',
+    'grade' => 4,
+    'lifetime' => 24 * 24 * 3600, // 24 days
+    'food_type' => 'Мясо',
+    'favorite_food' => 'Стейк',
+  ];
+
+  return $dinosaurs;
+}
+
+/**
+ * Helper function returns array with all food.
+ *
+ * @return array
+ */
+function _get_food() {
+  $food = [];
+
+  // Fish.
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/fish/fish.svg',
+    'food_type' => 'Морепродукты',
+    'name' => 'Лящ',
+  ];
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/fish/octopus.svg',
+    'food_type' => 'Морепродукты',
+    'name' => 'Осьминог',
+  ];
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/fish/salmon.svg',
+    'food_type' => 'Морепродукты',
+    'name' => 'Лосось',
+  ];
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/fish/shrimp.svg',
+    'food_type' => 'Морепродукты',
+    'name' => 'Креветка',
+  ];
+  // Fruits.
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/fruits/apple.svg',
+    'food_type' => 'Фрукты',
+    'name' => 'Яблоко',
+  ];
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/fruits/fig.svg',
+    'food_type' => 'Фрукты',
+    'name' => 'Фига',
+  ];
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/fruits/pear.svg',
+    'food_type' => 'Фрукты',
+    'name' => 'Груша',
+  ];
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/fruits/pineapple.svg',
+    'food_type' => 'Фрукты',
+    'name' => 'Ананас',
+  ];
+  // Meat.
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/meat/bacon.svg',
+    'food_type' => 'Мясо',
+    'name' => 'Бекон',
+  ];
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/meat/meat.svg',
+    'food_type' => 'Мясо',
+    'name' => 'Курочка',
+  ];
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/meat/meat-1.svg',
+    'food_type' => 'Мясо',
+    'name' => 'Окорок',
+  ];
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/meat/steak.svg',
+    'food_type' => 'Мясо',
+    'name' => 'Стейк',
+  ];
+  // Vegetables.
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/vegetables/broccoli.svg',
+    'food_type' => 'Овощи',
+    'name' => 'Брокколи',
+  ];
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/vegetables/cabbage.svg',
+    'food_type' => 'Овощи',
+    'name' => 'Капуста',
+  ];
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/vegetables/carrot.svg',
+    'food_type' => 'Овощи',
+    'name' => 'Морковка',
+  ];
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/vegetables/tomato.svg',
+    'food_type' => 'Овощи',
+    'name' => 'Томат',
+  ];
+
+  return $food;
+}
