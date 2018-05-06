@@ -46,37 +46,39 @@ function custom_block_view($delta = '') {
 function custom_timer_form($form, &$form_state) {
   global $user;
 
-  if ($user->timer <= time()) {
-    $form['start_timer'] = [
-      '#type' => 'button',
-      '#value' => 'Получить ингредиент',
-      '#ajax' => [
-        'callback' => 'custom_timer_ajax_callback',
-        'wrapper' => 'custom-timer-form',
-        'method' => 'replace',
-        'effect' => 'fade',
+  if ($user->uid) {
+    if ($user->timer <= time()) {
+      $form['start_timer'] = [
+        '#type' => 'button',
+        '#value' => 'Получить ингредиент',
+        '#ajax' => [
+          'callback' => 'custom_timer_ajax_callback',
+          'wrapper' => 'custom-timer-form',
+          'method' => 'replace',
+          'effect' => 'fade',
+        ],
+      ];
+    }
+    else {
+      $form['timer'] = [
+        '#markup' => theme('html_tag', [
+          'element' => [
+            '#tag' => 'h2',
+            '#attributes' => [
+              'class' => 'active-timer',
+            ],
+            '#value' => date('i:s', $user->timer - time()),
+          ],
+        ]),
+      ];
+    }
+
+    $form['#attached'] = [
+      'js' => [
+        drupal_get_path('module', 'custom') . '/js/timer.js',
       ],
     ];
   }
-  else {
-    $form['timer'] = [
-      '#markup' => theme('html_tag', [
-        'element' => [
-          '#tag' => 'h2',
-          '#attributes' => [
-            'class' => 'active-timer',
-          ],
-          '#value' => date('i:s', $user->timer - time()),
-        ],
-      ]),
-    ];
-  }
-
-  $form['#attached'] = [
-    'js' => [
-      drupal_get_path('module', 'custom') . '/js/timer.js',
-    ],
-  ];
 
   return $form;
 }
