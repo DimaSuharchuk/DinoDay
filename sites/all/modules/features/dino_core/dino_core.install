@@ -12,10 +12,17 @@ function dino_core_install() {
   _update_global_variables();
   // Remove orphaned actions.
   actions_synchronize(TRUE);
-  // Add property "Timer" to "users".
-  if (!db_field_exists('users', 'timer')) {
-    $schema = drupal_get_schema('users');
-    db_add_field('users', 'timer', $schema['fields']['timer']);
+  // Add properties to "users" schema.
+  $users_schema = drupal_get_schema('users');
+  $properties = [
+    'timer',
+    'dinosaurs',
+    'food',
+  ];
+  foreach ($properties as $property) {
+    if (!db_field_exists('users', $property)) {
+      db_add_field('users', $property, $users_schema['fields'][$property]);
+    }
   }
 }
 

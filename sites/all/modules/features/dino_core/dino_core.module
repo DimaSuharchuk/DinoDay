@@ -28,4 +28,16 @@ function dino_core_schema_alter(&$schema) {
     'not null' => TRUE,
     'default' => 0,
   ];
+  $schema['users']['fields']['dinosaurs'] = [
+    'type' => 'text',
+    'size' => 'normal',
+    'not null' => FALSE,
+    'description' => 'Dinosaurs ID\'s opened by user.',
+  ];
+  $schema['users']['fields']['food'] = [
+    'type' => 'text',
+    'size' => 'normal',
+    'not null' => FALSE,
+    'description' => 'Food ID\'s received by user.',
+  ];
 }
