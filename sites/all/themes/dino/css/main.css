@@ -1,0 +1,38 @@
+.l-main {
+    max-width: 95rem;
+}
+
+#edit-dinosaurs {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form-item-dinosaurs {
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 33%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(45deg);
+    margin: 7px;
+}
+
+.form-item-dinosaurs:hover {
+    background-color: rgba(30, 144, 255, .1);
+}
+
+.form-item-dinosaurs input {
+    display: none;
+}
+
+.form-item-dinosaurs label {
+    display: contents !important;
+}
+
+.form-item-dinosaurs img {
+    width: 75%;
+    height: 75%;
+    transform: rotate(-45deg);
+}

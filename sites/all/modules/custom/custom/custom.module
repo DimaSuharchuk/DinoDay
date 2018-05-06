@@ -5,6 +5,28 @@
  */
 
 /**
+ * Implements hook_menu().
+ */
+function custom_menu() {
+  $items = [];
+
+  $items['collection'] = [
+    'title' => 'Коллекция',
+    'menu_name' => 'main-menu',
+    'page callback' => 'custom_collection_page',
+    'access callback' => TRUE,
+  ];
+  $items['food'] = [
+    'title' => 'Пища',
+    'menu_name' => 'main-menu',
+    'page callback' => 'custom_food_page',
+    'access callback' => 'user_is_logged_in',
+  ];
+
+  return $items;
+}
+
+/**
  * Implements hook_block_info().
  */
 function custom_block_info() {
@@ -103,4 +125,60 @@ function custom_timer_ajax_callback($form, &$form_state) {
   user_save($user);
 
   return drupal_get_form('custom_timer_form');
+}
+
+/**
+ * Collection page.
+ */
+function custom_collection_page() {
+  $page = [];
+
+  $page['collection'] = [
+    '#type' => 'container',
+    '#attributes' => [
+      'class' => ['dinosaurs-table', 'columns', 'medium-6'],
+    ],
+  ];
+  $page['collection']['dinosaurs'] = drupal_get_form('custom_collection_form');
+
+  $page['dino_info'] = [
+    '#type' => 'container',
+    '#attributes' => [
+      'class' => ['dinosaur-info', 'columns', 'medium-6'],
+      'id' => 'dinosaur-info',
+    ],
+  ];
+
+  return $page;
+}
+
+/**
+ * From with dinosaurs pictures as buttons.
+ */
+function custom_collection_form($form, &$from_state) {
+  $pictures_path = db_select('eck_dinosaur', 'd')
+    ->fields('d', ['picture'])
+    ->execute()
+    ->fetchCol();
+
+  $options = [];
+  foreach ($pictures_path as $value) {
+    $options[] = "<img src='{$value}'/>";
+  }
+
+  $form['dinosaurs'] = [
+    '#type' => 'radios',
+    '#options' => $options,
+    // @todo Add black disabled options for non-opened dinosaurs.
+    // @todo Add ajax callback with display dinosaur info in #dinosaur-info.
+  ];
+
+  return $form;
+}
+
+/**
+ * Food page.
+ */
+function custom_food_page() {
+  return 'Coming soon.';
 }

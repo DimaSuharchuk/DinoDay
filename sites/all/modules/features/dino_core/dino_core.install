@@ -58,10 +58,10 @@ function _dino_theme_enable() {
  * Helper function for config global variables.
  */
 function _update_global_variables() {
-  // Set frontpage path.
-  //  variable_set('site_frontpage', '');
   // Remove default home link.
-  //  menu_link_delete(NULL, '<front>');
+  menu_link_delete(NULL, '<front>');
+  // Set frontpage path.
+  variable_set('site_frontpage', 'collection');
   // Account settings.
   variable_set('user_register', '1');
   variable_set('user_pictures', FALSE);
