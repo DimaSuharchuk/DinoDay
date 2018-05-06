@@ -36,10 +36,28 @@ function batch_items_menu() {
  * @return mixed
  */
 function batch_items_form($form, &$form_state) {
+  $dino_default_count = count(_get_dinosaurs());
+  $food_default_count = count(_get_food());
+
+  $result = db_select('eck_dinosaur', 'd')
+    ->fields('d')
+    ->execute();
+  $dino_db_count = $result->rowCount();
+  $result = db_select('eck_food', 'f')
+    ->fields('f')
+    ->execute();
+  $food_db_count = $result->rowCount();
+
+  drupal_set_message(t('@d dinosaurs in DB now.', ['@d' => $dino_db_count]));
+  drupal_set_message(t('@f food in DB now.', ['@f' => $food_db_count]));
+
   $form['start'] = [
     '#type' => 'submit',
     '#value' => t('Add dinosaurs and food'),
   ];
+  if ($dino_default_count <= $dino_db_count && $food_default_count <= $food_db_count) {
+    $form['start']['#disabled'] = TRUE;
+  }
 
   return $form;
 }
