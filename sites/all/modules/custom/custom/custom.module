@@ -19,7 +19,8 @@ function custom_menu() {
   $items['food'] = [
     'title' => 'Пища',
     'menu_name' => 'main-menu',
-    'page callback' => 'custom_food_page',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => ['custom_food_form'],
     'access callback' => 'user_is_logged_in',
   ];
 
@@ -124,7 +125,12 @@ function custom_timer_ajax_callback($form, &$form_state) {
 
   user_save($user);
 
-  return drupal_get_form('custom_timer_form');
+  $commands = [];
+  // @todo Looks like it's bad code.
+  $commands[] = ajax_command_replace('#custom-timer-form', drupal_render(drupal_get_form('custom_timer_form')));
+  $commands[] = ajax_command_replace('#custom-food-form', drupal_render(drupal_get_form('custom_food_form')));
+
+  return ['#type' => 'ajax', '#commands' => $commands];
 }
 
 /**
@@ -163,6 +169,11 @@ function custom_collection_form($form, &$from_state) {
 
   $options = [];
   foreach ($pictures_path as $value) {
+    // @todo Display as black pictures.
+    /**
+     * list($v1, $v2) = explode('.', $value);
+     * $value = "$v1-black.$v2";
+     **/
     $options[] = "<img src='{$value}'/>";
   }
 
@@ -179,6 +190,92 @@ function custom_collection_form($form, &$from_state) {
 /**
  * Food page.
  */
-function custom_food_page() {
-  return 'Coming soon.';
+function custom_food_form($form, &$form_state) {
+  global $user;
+
+  $form['food_set'] = [
+    '#type' => 'container',
+    '#attributes' => [
+      'class' => ['user-food-block', 'columns', 'medium-6'],
+      'id' => 'user-food-block',
+    ],
+  ];
+
+  $user_food_ids = explode(',', $user->food);
+  $food_entities = entity_load('food', $user_food_ids);
+
+  $options = [];
+  foreach ($user_food_ids as $id) {
+    if (key_exists($id, $food_entities)) {
+      $options[] = "<img src='{$food_entities[$id]->picture}' />";
+    }
+  }
+  $form['food_set']['food'] = [
+    '#type' => 'checkboxes',
+    '#options' => $options,
+  ];
+  $form['cook_block'] = [
+    '#type' => 'container',
+    '#attributes' => [
+      'class' => ['cook-block', 'columns', 'medium-6'],
+      'id' => 'cook-block',
+    ],
+  ];
+  $form['cook_block']['container'] = [
+    '#type' => 'container',
+    '#attributes' => [
+      'class' => ['cook-wrapper'],
+    ],
+  ];
+
+  // Submit.
+  $form['cook_block']['container']['cook'] = [
+    '#type' => 'image_button',
+    '#src' => FOOD_PICTURE_DIR . '/other/stew-1.svg',
+    '#ajax' => [
+      'callback' => 'custom_food_ajax_callback',
+      'wrapper' => 'user-food-block',
+      'method' => 'replace',
+      'effect' => 'fade',
+    ],
+  ];
+
+  return $form;
+}
+
+/**
+ * Food form submit.
+ *
+ * @param $form
+ * @param $form_state
+ *
+ * @throws \Exception
+ */
+function custom_food_ajax_callback($form, &$form_state) {
+  global $user;
+
+  // Fetch selected by user food ID's.
+  $selected_food = $form_state['values']['food'];
+  $selected_food = array_filter($selected_food, function ($v, $k) {
+    return is_string($v);
+  }, ARRAY_FILTER_USE_BOTH);
+
+  // Remove used food from DB.
+  $user_food = explode(',', $user->food);
+  foreach ($selected_food as $value) {
+    unset($user_food[$value]);
+  }
+  $user->food = implode(',', $user_food);
+
+  // @todo Save bait of needed level.
+
+  user_save($user);
+
+  // Reload page.
+  ctools_include('ajax');
+  ctools_add_js('ajax-responder');
+  $commands = [];
+  $commands[] = ctools_ajax_command_reload();
+  print ajax_render($commands);
+  drupal_exit();
 }
