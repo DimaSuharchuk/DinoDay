@@ -507,6 +507,27 @@ function _get_food() {
     'food_type' => 'Овощи',
     'name' => 'Томат',
   ];
+  // Bait.
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/other/stew.svg',
+    'food_type' => 'Наживка',
+    'name' => 'Наживка ур. I',
+  ];
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/other/stew.svg',
+    'food_type' => 'Наживка',
+    'name' => 'Наживка ур. II',
+  ];
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/other/stew.svg',
+    'food_type' => 'Наживка',
+    'name' => 'Наживка ур. III',
+  ];
+  $food[] = [
+    'picture' => FOOD_PICTURE_DIR . '/other/stew.svg',
+    'food_type' => 'Наживка',
+    'name' => 'Наживка ур. IV',
+  ];
 
   return $food;
 }
