@@ -1,3 +1,7 @@
+a:focus {
+    outline: none;
+}
+
 .l-main {
     max-width: 95rem;
 }
@@ -54,7 +58,7 @@
     transform: rotate(-45deg);
 }
 
-.user-food-block > div {
+.user-food-block .fieldset-wrapper > div {
     display: flex;
     flex-wrap: wrap;
 }
@@ -72,9 +76,12 @@
 }
 
 .user-food-block img.checked {
-    /*border: 2px solid #9f9e00;*/
     box-shadow: 1px 1px 10px 1px pink inset;
     border-radius: 20%;
+}
+
+.user-food-block img.muted {
+    opacity: .5;
 }
 
 .cook-block {
