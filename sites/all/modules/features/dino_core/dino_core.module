@@ -42,3 +42,14 @@ function dino_core_schema_alter(&$schema) {
     'description' => 'Food ID\'s received by user.',
   ];
 }
+
+/**
+ * Implements hook_mail_alter().
+ */
+function dino_core_mail_alter(&$message) {
+  switch ($message['key']) {
+    case 'register_no_approval_required':
+      $message['send'] = FALSE;
+      break;
+  }
+}
