@@ -30,4 +30,18 @@
             });
         }
     };
+
+    Drupal.behaviors.animateFoodReward = {
+        attach: function () {
+            if ($('#food-reward-wrapper').find('img').length) {
+                $('#food-reward-wrapper img').animate({
+                    width: '300px',
+                    height: '300px',
+                    opacity: 0,
+                }, 3000, function () {
+                    $(this).remove()
+                })
+            }
+        }
+    };
 })(jQuery);

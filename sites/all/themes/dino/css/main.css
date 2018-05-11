@@ -10,6 +10,7 @@ a:focus {
     max-width: 100%;
 }
 
+/* Timer. */
 #custom-timer-form {
     text-align: center;
 }
@@ -18,11 +19,30 @@ a:focus {
     text-align: right;
 }
 
+/* Food reward. */
+#food-reward-wrapper {
+    position: absolute;
+    z-index: 9999;
+    top: calc(50vh - 150px);
+    left: calc(50% - 150px);
+    width: 300px;
+    height: 300px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+#food-reward-wrapper img {
+    width: 0;
+    height: 0;
+}
+
 #page-title {
     text-align: center;
     margin-bottom: 30px;
 }
 
+/* Collection page. */
 #edit-dinosaurs {
     display: flex;
     flex-wrap: wrap;
@@ -58,9 +78,18 @@ a:focus {
     transform: rotate(-45deg);
 }
 
+/* Food page. */
 .user-food-block .fieldset-wrapper > div {
     display: flex;
     flex-wrap: wrap;
+}
+
+.user-food-block fieldset {
+    border: 1px dashed rgba(0, 0, 0, 0.1);
+}
+
+.user-food-block fieldset:not(.collapsed) {
+    border-radius: 30px;
 }
 
 .user-food-block input {

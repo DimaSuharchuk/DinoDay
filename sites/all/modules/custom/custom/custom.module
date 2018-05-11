@@ -79,7 +79,14 @@ function custom_block_view($delta = '') {
   $block = [];
   switch ($delta) {
     case 'timer':
-      $block['content'] = drupal_get_form('custom_timer_form');
+      $block['content'] = [];
+      $block['content']['form'] = drupal_get_form('custom_timer_form');
+      $block['content']['food_reward_wrapper'] = [
+        '#type' => 'container',
+        '#attributes' => [
+          'id' => 'food-reward-wrapper',
+        ],
+      ];
       break;
   }
   return $block;
@@ -150,15 +157,18 @@ function custom_timer_ajax_callback($form, &$form_state) {
   $user->timer = time() + 30 * 60;
   // Save food ID to user.
   $user_food = explode(',', $user->food);
-  array_push($user_food, rand(1, 16));
+  $random_food_id = rand(1, 16);
+  array_push($user_food, $random_food_id);
   $user->food = implode(',', $user_food);
 
   user_save($user);
 
   $commands = [];
-  // @todo Looks like it's bad code.
   $commands[] = ajax_command_replace('#custom-timer-form', drupal_render(drupal_get_form('custom_timer_form')));
   $commands[] = ajax_command_replace('#custom-food-form', drupal_render(drupal_get_form('custom_food_form')));
+
+  $food_entity = entity_load_single('food', $random_food_id);
+  $commands[] = ajax_command_html('#food-reward-wrapper', "<img src='{$food_entity->picture}' />");
 
   return ['#type' => 'ajax', '#commands' => $commands];
 }
