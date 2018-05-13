@@ -129,11 +129,11 @@ function custom_food_form($form, &$form_state) {
   ];
 
   // Set a bait.
-  $form['cook_block']['set_bait'] = [
+  $form['set_bait'] = [
     '#type' => 'button',
-    '#value' => 'Положить наживку',
+    '#value' => 'Положить наживку?',
     '#attributes' => [
-      'class' => ['set-bait'],
+      'class' => ['set-bait', 'secondary'],
     ],
     '#states' => [
       'invisible' => [

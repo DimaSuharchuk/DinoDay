@@ -20,14 +20,31 @@ a:focus {
 }
 
 /* Catch block. */
+#catch-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+}
+
+#catch-wrapper input {
+    display: none;
+}
+
+#catch-wrapper > div {
+    display: flex;
+    justify-content: flex-end;
+}
+
 #catch-wrapper img {
     width: 100px;
     float: right;
     display: block;
 }
 
-.set-bait {
-    display: none;
+#catch-wrapper .catch-cancel {
+    border-radius: 10px;
+    height: max-content;
+    margin: 0 30px 15px 0;
 }
 
 /* Food reward. */
@@ -147,4 +164,12 @@ a:focus {
 
 .cook-block input {
     width: 100px;
+}
+
+/* Set bait button. */
+.set-bait {
+    display: none;
+    position: absolute;
+    opacity: 0;
+    border-radius: 10px;
 }

@@ -222,12 +222,14 @@ function custom_catch_form($form, &$form_state) {
     ];
     $form['container']['cancel'] = [
       '#type' => 'button',
-      '#value' => 'Отменить',
+      '#value' => 'Убрать наживку',
       '#ajax' => [
         'callback' => 'custom_catch_cancel_ajax_callback',
-        //        'wrapper' => 'catch-processed',
         'effect' => 'fade',
         'progress' => FALSE,
+      ],
+      '#attributes' => [
+        'class' => ['catch-cancel', 'secondary'],
       ],
     ];
   }

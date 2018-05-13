@@ -55,9 +55,17 @@
             } else {
                 $('.bait input[type=checkbox]', context).on('click', function () {
                     if ($('input:checkbox:checked').length !== 1) {
-                        $('.set-bait').addClass('invisible');
+                        $('.set-bait', context).addClass('invisible');
                     } else {
-                        $('.set-bait').removeClass('invisible');
+                        $('.set-bait', context)
+                            .removeClass('invisible')
+                            .css({
+                                top: $(this).closest('.fieldset-wrapper').offset().top - 204,
+                                left: $(this).closest('.fieldset-wrapper').offset().left + 150,
+                            })
+                            .animate({
+                                opacity: 1,
+                            }, 500);
                     }
                 });
             }
