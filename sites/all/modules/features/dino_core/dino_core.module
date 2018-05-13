@@ -54,9 +54,6 @@ function dino_core_schema_alter(&$schema) {
  * Implements hook_mail_alter().
  */
 function dino_core_mail_alter(&$message) {
-  switch ($message['key']) {
-    case 'register_no_approval_required':
-      $message['send'] = FALSE;
-      break;
-  }
+  // Not need to send any emails for this project.
+  $message['send'] = FALSE;
 }
