@@ -118,14 +118,22 @@ function custom_food_form($form, &$form_state) {
 
   // Submit.
   $form['cook_block']['container']['cook'] = [
-    // @todo Change type to "button" for ajax rebuild form.
-    '#type' => 'image_button',
-    '#src' => FOOD_PICTURE_DIR . '/other/stew-1.svg',
+    '#type' => 'button',
+    '#value' => 'Приготовить наживку',
     '#ajax' => [
       'callback' => 'custom_food_ajax_callback',
       'effect' => 'fade',
       'progress' => FALSE,
     ],
+    '#attributes' => [
+      'class' => ['cook-bait-button'],
+    ],
+  ];
+  // Image used as button.
+  $form['cook_block']['container']['cook_image'] = [
+    '#markup' => theme('image', [
+      'path' => FOOD_PICTURE_DIR . '/other/stew-1.svg',
+    ]),
   ];
 
   // Set a bait.
@@ -156,6 +164,7 @@ function custom_food_form($form, &$form_state) {
  * @param $form
  * @param $form_state
  *
+ * @return array
  * @throws \Exception
  */
 function custom_food_ajax_callback($form, &$form_state) {
@@ -206,14 +215,11 @@ function custom_food_ajax_callback($form, &$form_state) {
 
   user_save($user);
 
-  // @todo Change to ajax, not reload page.
-  // Reload page.
-  ctools_include('ajax');
-  ctools_add_js('ajax-responder');
+  $custom_food_form = drupal_get_form('custom_food_form');
   $commands = [];
-  $commands[] = ctools_ajax_command_reload();
-  print ajax_render($commands);
-  drupal_exit();
+  $commands[] = ajax_command_replace('#custom-food-form', '<div id="custom-food-form">' . drupal_render($custom_food_form) . '</div>');
+
+  return ['#type' => 'ajax', '#commands' => $commands];
 }
 
 /**

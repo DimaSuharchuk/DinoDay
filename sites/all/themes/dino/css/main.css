@@ -150,7 +150,7 @@ a:focus {
     box-shadow: 1px 1px 40px 5px orangered inset;
     border-radius: 100%;
     padding: 20px;
-    opacity: 0;
+    opacity: 0.3;
 }
 
 .cook-wrapper.active {
@@ -162,7 +162,11 @@ a:focus {
     transform: scale(1.01);
 }
 
-.cook-block input {
+.cook-block .cook-bait-button {
+    display: none;
+}
+
+.cook-block img {
     width: 100px;
 }
 

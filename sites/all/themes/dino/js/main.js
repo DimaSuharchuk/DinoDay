@@ -23,6 +23,11 @@
                 if (checkedCount === 3) {
                     $('.cook-wrapper').addClass('active');
                     $('.cook-wrapper input').attr('disabled', false);
+
+                    // Click the "cook" button when the image was clicked.
+                    $('.cook-wrapper.active').on('click', function () {
+                        $('.cook-bait-button').mousedown();
+                    });
                 } else {
                     $('.cook-wrapper').removeClass('active');
                     $('.cook-wrapper input').attr('disabled', true);
@@ -50,8 +55,6 @@
             if ($('#catch-wrapper img').length) {
                 // Remove unnecessary button when bait already installed.
                 $('.set-bait').remove();
-                // Fix strange bug with checked element after ajax form rebuild from other form.
-                $('.bait input:checkbox:checked', context).prop('checked', false);
             } else {
                 $('.bait input[type=checkbox]', context).on('click', function () {
                     if ($('input:checkbox:checked').length !== 1) {
@@ -69,6 +72,13 @@
                     }
                 });
             }
+        }
+    };
+
+    // Fix strange bug with checked elements after ajax form rebuild from other form.
+    Drupal.behaviors.ajaxRebuildFormFix = {
+        attach: function (context) {
+            $('#user-food-block input:checkbox:checked', context).prop('checked', false);
         }
     };
 })(jQuery);

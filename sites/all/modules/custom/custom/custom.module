@@ -205,33 +205,37 @@ function custom_timer_ajax_callback($form, &$form_state) {
 function custom_catch_form($form, &$form_state) {
   global $user;
 
-  // Wrapper for ajax.
-  $form['container'] = [
-    '#type' => 'container',
-    '#attributes' => [
-      'id' => 'catch-wrapper',
-    ],
-  ];
-
-  if ($user->catch) {
-    $form['container']['img'] = [
-      '#markup' => theme('image', [
-        'path' => FOOD_PICTURE_DIR . '/other/dish.svg',
-        'attributes' => ['id' => ['catch-indicator']],
-      ]),
-    ];
-    $form['container']['cancel'] = [
-      '#type' => 'button',
-      '#value' => 'Убрать наживку',
-      '#ajax' => [
-        'callback' => 'custom_catch_cancel_ajax_callback',
-        'effect' => 'fade',
-        'progress' => FALSE,
-      ],
+  if ($user->uid) {
+    // Wrapper for ajax.
+    $form['container'] = [
+      '#type' => 'container',
       '#attributes' => [
-        'class' => ['catch-cancel', 'secondary'],
+        'id' => 'catch-wrapper',
       ],
     ];
+
+    if ($user->catch) {
+      $form['container']['img'] = [
+        '#markup' => theme('image', [
+          'path' => FOOD_PICTURE_DIR . '/other/dish.svg',
+          'attributes' => [
+            'id' => 'catch-indicator',
+          ],
+        ]),
+      ];
+      $form['container']['cancel'] = [
+        '#type' => 'button',
+        '#value' => 'Убрать наживку',
+        '#ajax' => [
+          'callback' => 'custom_catch_cancel_ajax_callback',
+          'effect' => 'fade',
+          'progress' => FALSE,
+        ],
+        '#attributes' => [
+          'class' => ['catch-cancel', 'secondary'],
+        ],
+      ];
+    }
   }
 
   return $form;
