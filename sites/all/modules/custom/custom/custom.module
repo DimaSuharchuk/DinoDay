@@ -172,7 +172,7 @@ function custom_timer_ajax_callback($form, &$form_state) {
   global $user;
 
   // Save timestamp when user can click the button again.
-  $user->timer = time() + 30 * 60;
+  $user->timer = time() + variable_get('timer_duration', 30) * 60;
   // Save food ID to user.
   $user_food = explode(',', $user->food);
   $random_food_id = rand(1, 16);

@@ -17,12 +17,23 @@ define('FOOD_PICTURE_DIR', drupal_get_path('theme', 'dino') . '/images/food');
  * Implements hook_menu().
  */
 function batch_items_menu() {
+  $weight = 10;
+
   return [
     'admin/settings/batch' => [
       'title' => 'Batch',
       'page callback' => 'drupal_get_form',
       'page arguments' => ['batch_items_form'],
       'access arguments' => ['administer content'],
+      'weight' => $weight++,
+    ],
+    'admin/settings/site_settings' => [
+      'title' => 'Site settings',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => ['site_settings_form'],
+      'access arguments' => ['administer content'],
+      'weight' => $weight++,
+      'file' => 'site_settings.inc',
     ],
   ];
 }
