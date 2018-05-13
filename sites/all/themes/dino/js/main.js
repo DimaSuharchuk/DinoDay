@@ -44,4 +44,23 @@
             }
         }
     };
+
+    Drupal.behaviors.setBaitButtonDisplay = {
+        attach: function (context) {
+            if ($('#catch-wrapper img').length) {
+                // Remove unnecessary button when bait already installed.
+                $('.set-bait').remove();
+                // Fix strange bug with checked element after ajax form rebuild from other form.
+                $('.bait input:checkbox:checked', context).prop('checked', false);
+            } else {
+                $('.bait input[type=checkbox]', context).on('click', function () {
+                    if ($('input:checkbox:checked').length !== 1) {
+                        $('.set-bait').addClass('invisible');
+                    } else {
+                        $('.set-bait').removeClass('invisible');
+                    }
+                });
+            }
+        }
+    };
 })(jQuery);

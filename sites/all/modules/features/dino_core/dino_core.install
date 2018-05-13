@@ -16,6 +16,7 @@ function dino_core_install() {
   $users_schema = drupal_get_schema('users');
   $properties = [
     'timer',
+    'catch',
     'dinosaurs',
     'food',
   ];

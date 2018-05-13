@@ -19,10 +19,20 @@ a:focus {
     text-align: right;
 }
 
+/* Catch block. */
+#catch-wrapper img {
+    width: 100px;
+    float: right;
+    display: block;
+}
+
+.set-bait {
+    display: none;
+}
+
 /* Food reward. */
 #food-reward-wrapper {
     position: absolute;
-    z-index: 9999;
     top: calc(50vh - 150px);
     left: calc(50% - 150px);
     width: 300px;

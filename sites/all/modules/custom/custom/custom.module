@@ -68,6 +68,13 @@ function custom_block_info() {
     'status' => TRUE,
     'region' => 'header',
   ];
+  $blocks['catch'] = [
+    'info' => 'Catch dino',
+    'cache' => DRUPAL_NO_CACHE,
+    'weight' => 0,
+    'status' => TRUE,
+    'region' => 'header',
+  ];
 
   return $blocks;
 }
@@ -88,6 +95,10 @@ function custom_block_view($delta = '') {
         ],
       ];
       break;
+
+    case 'catch':
+      $block['content'] = drupal_get_form('custom_catch_form');
+      break;
   }
   return $block;
 }
@@ -104,21 +115,28 @@ function custom_block_view($delta = '') {
 function custom_timer_form($form, &$form_state) {
   global $user;
 
+  // Wrapper for ajax.
+  $form['container'] = [
+    '#type' => 'container',
+    '#attributes' => [
+      'id' => 'timer-wrapper',
+    ],
+  ];
+
   if ($user->uid) {
     if ($user->timer <= time()) {
-      $form['start_timer'] = [
+      $form['container']['start_timer'] = [
         '#type' => 'button',
         '#value' => 'Получить ингредиент',
         '#ajax' => [
           'callback' => 'custom_timer_ajax_callback',
           'wrapper' => 'custom-timer-form',
-          'method' => 'replace',
-          'effect' => 'fade',
+          'progress' => FALSE,
         ],
       ];
     }
     else {
-      $form['timer'] = [
+      $form['container']['timer'] = [
         '#markup' => theme('html_tag', [
           'element' => [
             '#tag' => 'h2',
@@ -164,11 +182,84 @@ function custom_timer_ajax_callback($form, &$form_state) {
   user_save($user);
 
   $commands = [];
-  $commands[] = ajax_command_replace('#custom-timer-form', drupal_render(drupal_get_form('custom_timer_form')));
-  $commands[] = ajax_command_replace('#custom-food-form', drupal_render(drupal_get_form('custom_food_form')));
+  $custom_timer_form = drupal_get_form('custom_timer_form');
+  $custom_food_form = drupal_get_form('custom_food_form');
+  $commands[] = ajax_command_replace('#timer-wrapper', drupal_render($custom_timer_form['container']));
+  $commands[] = ajax_command_replace('#custom-food-form', '<div id="custom-food-form">' . drupal_render($custom_food_form) . '</div>');
 
   $food_entity = entity_load_single('food', $random_food_id);
   $commands[] = ajax_command_html('#food-reward-wrapper', "<img src='{$food_entity->picture}' />");
+
+  return ['#type' => 'ajax', '#commands' => $commands];
+}
+
+/**
+ * Form with image indicates that bait was established.
+ *
+ * @param $form
+ * @param $form_state
+ *
+ * @return mixed
+ * @throws \Exception
+ */
+function custom_catch_form($form, &$form_state) {
+  global $user;
+
+  // Wrapper for ajax.
+  $form['container'] = [
+    '#type' => 'container',
+    '#attributes' => [
+      'id' => 'catch-wrapper',
+    ],
+  ];
+
+  if ($user->catch) {
+    $form['container']['img'] = [
+      '#markup' => theme('image', [
+        'path' => FOOD_PICTURE_DIR . '/other/dish.svg',
+        'attributes' => ['id' => ['catch-indicator']],
+      ]),
+    ];
+    $form['container']['cancel'] = [
+      '#type' => 'button',
+      '#value' => 'Отменить',
+      '#ajax' => [
+        'callback' => 'custom_catch_cancel_ajax_callback',
+        //        'wrapper' => 'catch-processed',
+        'effect' => 'fade',
+        'progress' => FALSE,
+      ],
+    ];
+  }
+
+  return $form;
+}
+
+/**
+ * Cancel catch.
+ *
+ * @param $form
+ * @param $form_state
+ *
+ * @return array|mixed
+ * @throws \Exception
+ */
+function custom_catch_cancel_ajax_callback($form, &$form_state) {
+  global $user;
+
+  $user_food = explode(',', $user->food);
+  array_push($user_food, $user->catch);
+  $user->food = implode(',', $user_food);
+
+  $user->catch = 0;
+
+  user_save($user);
+
+  $custom_catch_form = drupal_get_form('custom_catch_form');
+  $custom_food_form = drupal_get_form('custom_food_form');
+  $commands = [];
+  $commands[] = ajax_command_replace('#catch-wrapper', drupal_render($custom_catch_form['container']));
+  $commands[] = ajax_command_replace('#custom-food-form', '<div id="custom-food-form">' . drupal_render($custom_food_form) . '</div>');
 
   return ['#type' => 'ajax', '#commands' => $commands];
 }

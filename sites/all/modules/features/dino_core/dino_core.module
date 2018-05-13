@@ -29,6 +29,13 @@ function dino_core_schema_alter(&$schema) {
     'not null' => TRUE,
     'default' => 0,
   ];
+  $schema['users']['fields']['catch'] = [
+    'description' => 'Food ID indicates whether the bait is put.',
+    'type' => 'int',
+    'size' => 'tiny',
+    'not null' => TRUE,
+    'default' => 0,
+  ];
   $schema['users']['fields']['dinosaurs'] = [
     'type' => 'text',
     'size' => 'normal',

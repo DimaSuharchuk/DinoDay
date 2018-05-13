@@ -22,22 +22,22 @@ function custom_food_form($form, &$form_state) {
   $user_food_ids = explode(',', $user->food);
   $food_entities = entity_load('food', $user_food_ids);
 
-  $options_food = $options_beat_1 = $options_beat_2 = $options_beat_3 = $options_beat_4 = [];
+  $options_food = $options_bait_1 = $options_bait_2 = $options_bait_3 = $options_bait_4 = [];
   foreach ($user_food_ids as $i => $id) {
     if (key_exists($id, $food_entities)) {
       $food_picture = "<img src='{$food_entities[$id]->picture}' />";
       switch ($id) {
         case '17':
-          $options_beat_1[$i] = $food_picture;
+          $options_bait_1[$i] = $food_picture;
           break;
         case '18':
-          $options_beat_2[$i] = $food_picture;
+          $options_bait_2[$i] = $food_picture;
           break;
         case '19':
-          $options_beat_3[$i] = $food_picture;
+          $options_bait_3[$i] = $food_picture;
           break;
         case '20':
-          $options_beat_4[$i] = $food_picture;
+          $options_bait_4[$i] = $food_picture;
           break;
         default:
           $options_food[$i] = $food_picture;
@@ -53,28 +53,28 @@ function custom_food_form($form, &$form_state) {
       'classes' => ['food'],
       'message_if_null' => 'Ингредиентов пока нет, нажмите кнопку вверху экрана для получения ингредиента.',
     ],
-    'beat_1' => [
+    'bait_1' => [
       'title' => 'Наживки ур. I',
-      'options' => $options_beat_1,
-      'classes' => ['beat-1'],
+      'options' => $options_bait_1,
+      'classes' => ['bait', 'bait-1'],
       'message_if_null' => 'Наживок первого уровня пока нет. Выделите 3 любых ингредиента и нажмите кнопку "Приготовить".',
     ],
-    'beat_2' => [
+    'bait_2' => [
       'title' => 'Наживки ур. II',
-      'options' => $options_beat_2,
-      'classes' => ['beat-2'],
+      'options' => $options_bait_2,
+      'classes' => ['bait', 'bait-2'],
       'message_if_null' => 'Наживок второго уровня пока нет. Выделите 3 любых наживки первого уровня и нажмите кнопку "Приготовить".',
     ],
-    'beat_3' => [
+    'bait_3' => [
       'title' => 'Наживки ур. III',
-      'options' => $options_beat_3,
-      'classes' => ['beat-3'],
+      'options' => $options_bait_3,
+      'classes' => ['bait', 'bait-3'],
       'message_if_null' => 'Наживок третьего уровня пока нет. Выделите 3 любых наживки второго уровня и нажмите кнопку "Приготовить".',
     ],
-    'beat_4' => [
+    'bait_4' => [
       'title' => 'Наживки ур. IV',
-      'options' => $options_beat_4,
-      'classes' => ['beat-4'],
+      'options' => $options_bait_4,
+      'classes' => ['bait', 'bait-4'],
       'message_if_null' => 'Наживок четвертого уровня пока нет. Выделите 3 любых наживки третьего уровня и нажмите кнопку "Приготовить".',
     ],
   ];
@@ -118,13 +118,32 @@ function custom_food_form($form, &$form_state) {
 
   // Submit.
   $form['cook_block']['container']['cook'] = [
+    // @todo Change type to "button" for ajax rebuild form.
     '#type' => 'image_button',
     '#src' => FOOD_PICTURE_DIR . '/other/stew-1.svg',
     '#ajax' => [
       'callback' => 'custom_food_ajax_callback',
-      'wrapper' => 'user-food-block',
-      'method' => 'replace',
       'effect' => 'fade',
+      'progress' => FALSE,
+    ],
+  ];
+
+  // Set a bait.
+  $form['cook_block']['set_bait'] = [
+    '#type' => 'button',
+    '#value' => 'Положить наживку',
+    '#attributes' => [
+      'class' => ['set-bait'],
+    ],
+    '#states' => [
+      'invisible' => [
+        '.bait :input' => ['checked' => FALSE],
+      ],
+    ],
+    '#ajax' => [
+      'callback' => 'custom_set_bait_ajax_callback',
+      'effect' => 'fade',
+      'progress' => FALSE,
     ],
   ];
 
@@ -171,15 +190,15 @@ function custom_food_ajax_callback($form, &$form_state) {
       array_push($user_food, 17);
       break;
 
-    case 'beat_1':
+    case 'bait_1':
       array_push($user_food, 18);
       break;
 
-    case 'beat_2':
+    case 'bait_2':
       array_push($user_food, 19);
       break;
 
-    case 'beat_3':
+    case 'bait_3':
       array_push($user_food, 20);
       break;
   }
@@ -187,6 +206,7 @@ function custom_food_ajax_callback($form, &$form_state) {
 
   user_save($user);
 
+  // @todo Change to ajax, not reload page.
   // Reload page.
   ctools_include('ajax');
   ctools_add_js('ajax-responder');
@@ -194,4 +214,51 @@ function custom_food_ajax_callback($form, &$form_state) {
   $commands[] = ctools_ajax_command_reload();
   print ajax_render($commands);
   drupal_exit();
+}
+
+/**
+ * Button set bait to catch.
+ *
+ * @param $form
+ * @param $form_state
+ *
+ * @return array
+ * @throws \Exception
+ */
+function custom_set_bait_ajax_callback($form, &$form_state) {
+  global $user;
+
+  // Fetch selected by user food ID's.
+  $food_sets = $form_state['values']['food_set'];
+
+  // Check what type of food or bait user crafts.
+  $selected_food = [];
+  foreach ($food_sets as $type => $set) {
+    if (count(array_filter($set['items']))) {
+      $selected_food = $set['items'];
+      break;
+    }
+  }
+  // Filter from unnecessary values.
+  $selected_food = array_filter($selected_food, function ($v, $_) {
+    return is_string($v);
+  }, ARRAY_FILTER_USE_BOTH);
+
+  $user_food = explode(',', $user->food);
+  // Remove used food from DB.
+  foreach ($selected_food as $value) {
+    $user->catch = $user_food[$value];
+    unset($user_food[$value]);
+  }
+  $user->food = implode(',', $user_food);
+
+  user_save($user);
+
+  $custom_catch_form = drupal_get_form('custom_catch_form');
+  $custom_food_form = drupal_get_form('custom_food_form');
+  $commands = [];
+  $commands[] = ajax_command_replace('#custom-catch-form', '<div id="custom-catch-form">' . drupal_render($custom_catch_form) . '</div>');
+  $commands[] = ajax_command_replace('#custom-food-form', '<div id="custom-food-form">' . drupal_render($custom_food_form) . '</div>');
+
+  return ['#type' => 'ajax', '#commands' => $commands];
 }
