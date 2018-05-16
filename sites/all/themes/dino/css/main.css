@@ -87,6 +87,10 @@ a:focus {
     margin: 7px;
 }
 
+.no-rank {
+    box-shadow: 1px 1px 50px 3px #eee inset;
+}
+
 .rank-1 {
     box-shadow: 1px 1px 50px 3px lightgreen inset;
 }
@@ -126,6 +130,10 @@ a:focus {
     border: 1px solid #333;
     border-radius: 20%;
     padding: 30px;
+}
+
+.dinosaurs-info-block .no-rank {
+    box-shadow: 1px 1px 100px 10px #eee inset;
 }
 
 .dinosaurs-info-block .rank-1 {
