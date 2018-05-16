@@ -13,6 +13,7 @@ require_once CUSTOM_MODULE_PATH . '/pages/collection.page.inc';
 require_once CUSTOM_MODULE_PATH . '/pages/food.page.inc';
 require_once CUSTOM_MODULE_PATH . '/pages/settings.page.inc';
 require_once CUSTOM_MODULE_PATH . '/pages/statistics.page.inc';
+require_once CUSTOM_MODULE_PATH . '/dino_cron.inc';
 
 /**
  * Implements hook_menu().
