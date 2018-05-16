@@ -57,6 +57,30 @@ function custom_menu() {
 }
 
 /**
+ * Implements hook_theme().
+ */
+function custom_theme($existing, $type, $theme, $path) {
+  $templates = drupal_get_path('theme', 'dino') . '/templates';
+
+  return [
+    'dinosaur_info' => [
+      'variables' => [
+        'dinosaur_entity' => NULL,
+      ],
+      'path' => $templates,
+      'template' => 'dinosaur-info',
+    ],
+    'dinosaur_undefined_info' => [
+      'variables' => [
+        'dinosaur_entity' => NULL,
+      ],
+      'path' => $templates,
+      'template' => 'dinosaur-undefined-info',
+    ],
+  ];
+}
+
+/**
  * Implements hook_block_info().
  */
 function custom_block_info() {

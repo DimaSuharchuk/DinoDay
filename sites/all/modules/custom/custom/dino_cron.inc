@@ -41,25 +41,16 @@ function custom_dinosaur_catch() {
       $user = user_load($uid);
       // Get dinosaurs from user.
       $user_dinosaurs = $user->dinosaurs ? unserialize($user->dinosaurs) : [];
-      // Collect dino ids already opened.
-      $user_dinosaurs_ids = [];
-      if ($user_dinosaurs) {
-        foreach ($user_dinosaurs as $item) {
-          $user_dinosaurs_ids[] = $item['id'];
-        }
-      }
       // If user have not the dinosaur save it.
-      if (!in_array($id, $user_dinosaurs_ids)) {
-        $dinosaur_entity = entity_load_single('dinosaur', $id);
+      if (!in_array($id, array_keys($user_dinosaurs))) {
         // Start stats.
         $dinosaur_info = [
-          'id' => $id,
-          'death' => time() + $dinosaur_entity->lifetime,
-          'last_meal' => time(),
-          'current_mood' => 1000,
+          'caught' => time(),
+          'life' => 100,
+          'mood' => 100,
         ];
 
-        array_push($user_dinosaurs, $dinosaur_info);
+        $user_dinosaurs[$id] = $dinosaur_info;
         $user->dinosaurs = serialize($user_dinosaurs);
       }
       // Remove bait.

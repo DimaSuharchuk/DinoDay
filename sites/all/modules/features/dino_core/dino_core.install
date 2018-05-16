@@ -67,6 +67,8 @@ function _update_global_variables() {
   variable_set('user_register', '1');
   variable_set('user_pictures', FALSE);
   variable_set('user_email_verification', FALSE);
+  variable_set('configurable_timezones', FALSE);
+  variable_set('date_first_day', '1');
   // Cron settings.
   variable_set('cron_safe_threshold', 0);
 }

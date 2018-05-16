@@ -1,4 +1,13 @@
 (function ($) {
+    Drupal.behaviors.addCollectionFormRadioClass = {
+        attach: function (context) {
+            $('.dinosaurs-table img', context).each(function () {
+                var rankClass = $(this).data('rank');
+                $(this).closest('.form-item-dinosaurs').addClass(rankClass);
+            });
+        }
+    };
+
     Drupal.behaviors.chooseElements = {
         attach: function (context) {
             // Disable cook button if nothing is selected.

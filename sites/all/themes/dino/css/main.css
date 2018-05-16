@@ -87,6 +87,22 @@ a:focus {
     margin: 7px;
 }
 
+.rank-1 {
+    box-shadow: 1px 1px 50px 3px lightgreen inset;
+}
+
+.rank-2 {
+    box-shadow: 1px 1px 50px 3px dodgerblue inset;
+}
+
+.rank-3 {
+    box-shadow: 1px 1px 50px 3px blueviolet inset;
+}
+
+.rank-4 {
+    box-shadow: 1px 1px 50px 3px red inset;
+}
+
 .form-item-dinosaurs:hover {
     background-color: rgba(30, 144, 255, .1);
 }
@@ -103,6 +119,53 @@ a:focus {
     width: 75%;
     height: 75%;
     transform: rotate(-45deg);
+}
+
+/* Dinosaur info. */
+.dinosaurs-info-block img {
+    border: 1px solid #333;
+    border-radius: 20%;
+    padding: 30px;
+}
+
+.dinosaurs-info-block .rank-1 {
+    box-shadow: 1px 1px 100px 10px lightgreen inset;
+}
+
+.dinosaurs-info-block .rank-2 {
+    box-shadow: 1px 1px 100px 10px dodgerblue inset;
+}
+
+.dinosaurs-info-block .rank-3 {
+    box-shadow: 1px 1px 100px 10px blueviolet inset;
+}
+
+.dinosaurs-info-block .rank-4 {
+    box-shadow: 1px 1px 100px 10px red inset;
+}
+
+.dinosaur-bars {
+    margin-bottom: 20px;
+}
+
+.dinosaur-life-wrapper, .dinosaur-mood-wrapper {
+    background-color: #eee;
+    height: 15px;
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, .5);
+    margin-bottom: -1px;
+}
+
+.life, .mood {
+    height: 13px;
+}
+
+.life {
+    background: linear-gradient(to right, #770000, orangered 30%);
+}
+
+.mood {
+    background: linear-gradient(to right, greenyellow, yellow 30%);
 }
 
 /* Food page. */
