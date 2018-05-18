@@ -1,5 +1,11 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
 a:focus {
     outline: none;
+}
+
+.page {
+    width: 100%;
 }
 
 .l-main {
@@ -70,6 +76,10 @@ a:focus {
 }
 
 /* Collection page. */
+.dinosaurs-table {
+    margin-bottom: 30px;
+}
+
 #edit-dinosaurs {
     display: flex;
     flex-wrap: wrap;
@@ -247,4 +257,87 @@ a:focus {
     position: absolute;
     opacity: 0;
     border-radius: 10px;
+}
+
+/* Login block. */
+.block-user-login {
+    width: 50%;
+    position: relative;
+    padding-left: 0.9375rem;
+    padding-right: 0.9375rem;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+/* Modal popups. */
+.ctools-modal-dino-popup {
+    border: none !important;
+    border-radius: 30px !important;
+    overflow: hidden;
+}
+
+#modalBackdrop .popup-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #fff;
+    font-size: 50px;
+    cursor: pointer;
+}
+
+#modalContent .modal-header {
+    height: 54px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding: 0 20px;
+}
+
+#modalContent #modal-title {
+    flex-grow: 1;
+}
+
+#modalContent .close {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* User register in popup. */
+.confirm-parent, .password-parent {
+    width: 100%;
+}
+
+.password-strength, div.password-confirm, .password-suggestions {
+    display: none !important;
+}
+
+@media (max-width: 640px) {
+    .block-user-login {
+        width: 100%;
+    }
+
+    .form-item-dinosaurs {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 500px) {
+    #modalContent {
+        top: -3px !important;
+        left: -3px !important;
+    }
+
+    div.ctools-modal-content {
+        width: calc(100% - 2px) !important;
+    }
+
+    #modal-content {
+        width: 100% !important;
+    }
 }

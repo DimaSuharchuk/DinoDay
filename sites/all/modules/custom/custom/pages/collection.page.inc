@@ -8,6 +8,12 @@
  * Collection page.
  */
 function custom_collection_page() {
+  global $user;
+
+  if (!$user->uid) {
+    custom_ctools_popup_style();
+  }
+
   $page = [];
 
   $page['collection'] = [

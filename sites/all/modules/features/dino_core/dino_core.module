@@ -17,6 +17,15 @@ function dino_core_block_info_alter(&$blocks, $theme, $code_blocks) {
   $blocks['system']['navigation']['status'] = FALSE;
   $blocks['system']['powered-by']['status'] = FALSE;
   $blocks['user']['login']['region'] = 'content';
+  $blocks['user']['login']['visibility'] = BLOCK_VISIBILITY_LISTED;
+  $blocks['user']['login']['pages'] = '<front>';
+}
+
+/**
+ * Implements hook_block_view_MODULE_DELTA_alter().
+ */
+function dino_core_block_view_user_login_alter(&$data, $block) {
+  $data['subject'] = 'Авторизация';
 }
 
 /**

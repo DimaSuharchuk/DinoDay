@@ -29,6 +29,13 @@ function custom_menu() {
     'access callback' => TRUE,
     'weight' => $weight++,
   ];
+  $items['collection/%ctools_js'] = [
+    'title' => 'Регистрация',
+    'page arguments' => [1],
+    'access callback' => TRUE,
+    'page callback' => 'custom_register_popup',
+    'type' => MENU_CALLBACK,
+  ];
   $items['food'] = [
     'title' => 'Пища',
     'menu_name' => 'main-menu',
@@ -78,6 +85,123 @@ function custom_theme($existing, $type, $theme, $path) {
       'template' => 'dinosaur-undefined-info',
     ],
   ];
+}
+
+/**
+ * User register in popup.
+ *
+ * @param $js
+ *
+ * @return array|mixed
+ */
+function custom_register_popup($js) {
+  if (!$js) {
+    return drupal_get_form('user_register_form');
+  }
+
+  ctools_include('ajax');
+  ctools_include('modal');
+
+  $form_state = [
+    'ajax' => TRUE,
+    'title' => 'Регистрация',
+  ];
+  $output = ctools_modal_form_wrapper('user_register_form', $form_state);
+  print ajax_render($output);
+  drupal_exit();
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function custom_form_alter(&$form, &$form_state, $form_id) {
+  // @todo Fix it after i18n install.
+  switch ($form_id) {
+    case 'user_login_block':
+      $form['name']['#title'] = 'Логин';
+      $form['pass']['#title'] = 'Пароль';
+      $form['links'] = [
+        '#type' => 'link',
+        '#title' => 'Создать новый аккаунт',
+        '#href' => 'collection/nojs',
+        '#attributes' => [
+          'class' => [
+            'ctools-use-modal',
+            'ctools-modal-dino-popup',
+          ],
+        ],
+        '#prefix' => '<div class="register-link">',
+        '#suffix' => '</div>',
+      ];
+      $form['links']['#weight'] = 20;
+      $form['#attributes'] = [
+        'class' => ['authorization', 'columns', 'medium-6'],
+      ];
+      $form['actions']['submit']['#value'] = 'Войти';
+      $form['actions']['#weight'] = 10;
+      break;
+
+    case 'user_register_form':
+      $form['account']['name']['#title'] = 'Логин';
+      $form['account']['name']['#description'] = '';
+      $form['account']['mail']['#title'] = 'E-mail';
+      $form['account']['mail']['#description'] = '';
+      $form['account']['pass']['#description'] = '';
+      $form['actions']['submit']['#value'] = 'Создать аккаунт';
+      $form['actions']['submit']['#ajax'] = [
+        'callback' => 'custom_user_register_ajax_callback',
+      ];
+      break;
+  }
+}
+
+/**
+ * Reload page after register.
+ *
+ * @param $form
+ * @param $form_state
+ */
+function custom_user_register_ajax_callback($form, $form_state) {
+  ctools_include('ajax');
+  ctools_add_js('ajax-responder');
+
+  print ajax_render([ctools_ajax_command_reload()]);
+  drupal_exit();
+}
+
+/**
+ * Popup's settings function.
+ */
+function custom_ctools_popup_style() {
+  static $added = FALSE;
+  if ($added == FALSE) {
+    $added = TRUE;
+
+    ctools_include('modal');
+    ctools_include('ajax');
+    ctools_modal_add_js();
+
+    $popup_style = [
+      'dino-popup' => [
+        'modalSize' => [
+          'type' => 'fixed',
+          'width' => 450,
+          'height' => 'auto',
+        ],
+        'modalOptions' => [
+          'opacity' => (float) 0.8,
+          'background-color' => '#ccc',
+        ],
+        'closeText' => '&times;',
+        'loadingText' => '',
+        'animation' => 'fadeIn',
+        'modalTheme' => 'customPopupTheme',
+        'animationSpeed' => 'fast',
+      ],
+    ];
+    drupal_add_js($popup_style, 'setting');
+    ctools_add_js('popup_style', 'custom');
+  }
 }
 
 /**
