@@ -5,6 +5,7 @@ package = ACore
 
 ; Contrib modules.
 dependencies[] = elysia_cron
+dependencies[] = i18n
 dependencies[] = features
 dependencies[] = jquery_update
 ; Constrib modules need to disable on production.
