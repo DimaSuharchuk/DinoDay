@@ -15,9 +15,9 @@
             </div>
         </div>
 
-        <p>Ранг: <strong><?php print $grade; ?></strong></p>
-        <p>Возраст: <strong><?php print $age; ?></strong></p>
-        <p>Тип питания: <strong><?php print $food_type; ?></strong></p>
-        <p>Любимая еда: <strong><?php print $favorite_food; ?></strong></p>
+        <p><?php print t('Rank'); ?>: <strong><?php print $grade; ?></strong></p>
+        <p><?php print t('Age'); ?>: <strong><?php print $age; ?></strong></p>
+        <p><?php print t('Food type'); ?>: <strong><?php print $food_type; ?></strong></p>
+        <p><?php print t('Favorite food'); ?>: <strong><?php print $favorite_food; ?></strong></p>
     </div>
 </div>

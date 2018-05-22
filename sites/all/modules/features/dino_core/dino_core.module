@@ -22,13 +22,6 @@ function dino_core_block_info_alter(&$blocks, $theme, $code_blocks) {
 }
 
 /**
- * Implements hook_block_view_MODULE_DELTA_alter().
- */
-function dino_core_block_view_user_login_alter(&$data, $block) {
-  $data['subject'] = 'Авторизация';
-}
-
-/**
  * Implements hook_schema_alter().
  */
 function dino_core_schema_alter(&$schema) {

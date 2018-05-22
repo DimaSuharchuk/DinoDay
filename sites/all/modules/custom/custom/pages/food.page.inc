@@ -48,34 +48,34 @@ function custom_food_form($form, &$form_state) {
   // Display items by range in fieldsets.
   $set_schema = [
     'food' => [
-      'title' => 'Ингредиенты',
+      'title' => t('Ingredients'),
       'options' => $options_food,
       'classes' => ['food'],
-      'message_if_null' => 'Ингредиентов пока нет, нажмите кнопку вверху экрана для получения ингредиента.',
+      'message_if_null' => t('There are no ingredients yet, press the button at the top of the screen to get the ingredient.'),
     ],
     'bait_1' => [
-      'title' => 'Наживки ур. I',
+      'title' => t('Bait Level 1'),
       'options' => $options_bait_1,
       'classes' => ['bait', 'bait-1'],
-      'message_if_null' => 'Наживок первого уровня пока нет. Выделите 3 любых ингредиента и нажмите кнопку "Приготовить".',
+      'message_if_null' => t('Baits of level 1 is not yet there. Select three any ingredients and click the Cook button.'),
     ],
     'bait_2' => [
-      'title' => 'Наживки ур. II',
+      'title' => t('Bait Level 2'),
       'options' => $options_bait_2,
       'classes' => ['bait', 'bait-2'],
-      'message_if_null' => 'Наживок второго уровня пока нет. Выделите 3 любых наживки первого уровня и нажмите кнопку "Приготовить".',
+      'message_if_null' => t('Baits of level 2 is not yet there. Select three any baits of level 1 and click the "Cook" button.'),
     ],
     'bait_3' => [
-      'title' => 'Наживки ур. III',
+      'title' => t('Bait Level 3'),
       'options' => $options_bait_3,
       'classes' => ['bait', 'bait-3'],
-      'message_if_null' => 'Наживок третьего уровня пока нет. Выделите 3 любых наживки второго уровня и нажмите кнопку "Приготовить".',
+      'message_if_null' => t('Baits of level 3 is not yet there. Select three any baits of level 2 and click the "Cook" button.'),
     ],
     'bait_4' => [
-      'title' => 'Наживки ур. IV',
+      'title' => t('Bait Level 4'),
       'options' => $options_bait_4,
       'classes' => ['bait', 'bait-4'],
-      'message_if_null' => 'Наживок четвертого уровня пока нет. Выделите 3 любых наживки третьего уровня и нажмите кнопку "Приготовить".',
+      'message_if_null' => t('Baits of level 4 is not yet there. Select three any baits of level 3 and click the "Cook" button.'),
     ],
   ];
   foreach ($set_schema as $type => $item) {
@@ -119,7 +119,7 @@ function custom_food_form($form, &$form_state) {
   // Submit.
   $form['cook_block']['container']['cook'] = [
     '#type' => 'button',
-    '#value' => 'Приготовить наживку',
+    '#value' => t('Cook a bait'),
     '#ajax' => [
       'callback' => 'custom_food_ajax_callback',
       'effect' => 'fade',
@@ -139,7 +139,7 @@ function custom_food_form($form, &$form_state) {
   // Set a bait.
   $form['set_bait'] = [
     '#type' => 'button',
-    '#value' => 'Положить наживку?',
+    '#value' => t('Set the bait') . '?',
     '#attributes' => [
       'class' => ['set-bait', 'secondary'],
     ],

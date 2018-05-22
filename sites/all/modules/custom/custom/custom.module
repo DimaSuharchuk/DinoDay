@@ -23,21 +23,21 @@ function custom_menu() {
   $weight = 0;
 
   $items['collection'] = [
-    'title' => 'Коллекция',
+    'title' => 'Collection',
     'menu_name' => 'main-menu',
     'page callback' => 'custom_collection_page',
     'access callback' => TRUE,
     'weight' => $weight++,
   ];
   $items['collection/%ctools_js'] = [
-    'title' => 'Регистрация',
+    'title' => 'Register',
     'page arguments' => [1],
     'access callback' => TRUE,
     'page callback' => 'custom_register_popup',
     'type' => MENU_CALLBACK,
   ];
   $items['food'] = [
-    'title' => 'Пища',
+    'title' => 'Food',
     'menu_name' => 'main-menu',
     'page callback' => 'drupal_get_form',
     'page arguments' => ['custom_food_form'],
@@ -45,7 +45,7 @@ function custom_menu() {
     'weight' => $weight++,
   ];
   $items['settings'] = [
-    'title' => 'Настройки',
+    'title' => 'Settings',
     'menu_name' => 'main-menu',
     'page callback' => 'drupal_get_form',
     'page arguments' => ['custom_settings_form'],
@@ -53,7 +53,7 @@ function custom_menu() {
     'weight' => $weight++,
   ];
   $items['statistics'] = [
-    'title' => 'Статистика',
+    'title' => 'Statistics',
     'menu_name' => 'main-menu',
     'page callback' => 'custom_statistics_page',
     'access callback' => TRUE,
@@ -104,7 +104,7 @@ function custom_register_popup($js) {
 
   $form_state = [
     'ajax' => TRUE,
-    'title' => 'Регистрация',
+    'title' => t('Register'),
   ];
   $output = ctools_modal_form_wrapper('user_register_form', $form_state);
   print ajax_render($output);
@@ -115,14 +115,11 @@ function custom_register_popup($js) {
  * Implements hook_form_alter().
  */
 function custom_form_alter(&$form, &$form_state, $form_id) {
-  // @todo Fix it after i18n install.
   switch ($form_id) {
     case 'user_login_block':
-      $form['name']['#title'] = 'Логин';
-      $form['pass']['#title'] = 'Пароль';
       $form['links'] = [
         '#type' => 'link',
-        '#title' => 'Создать новый аккаунт',
+        '#title' => t('Create new account'),
         '#href' => 'collection/nojs',
         '#attributes' => [
           'class' => [
@@ -137,17 +134,13 @@ function custom_form_alter(&$form, &$form_state, $form_id) {
       $form['#attributes'] = [
         'class' => ['authorization', 'columns', 'medium-6'],
       ];
-      $form['actions']['submit']['#value'] = 'Войти';
       $form['actions']['#weight'] = 10;
       break;
 
     case 'user_register_form':
-      $form['account']['name']['#title'] = 'Логин';
       $form['account']['name']['#description'] = '';
-      $form['account']['mail']['#title'] = 'E-mail';
       $form['account']['mail']['#description'] = '';
       $form['account']['pass']['#description'] = '';
-      $form['actions']['submit']['#value'] = 'Создать аккаунт';
       $form['actions']['submit']['#ajax'] = [
         'callback' => 'custom_user_register_ajax_callback',
       ];
@@ -276,7 +269,7 @@ function custom_timer_form($form, &$form_state) {
     if ($user->timer <= time()) {
       $form['container']['start_timer'] = [
         '#type' => 'button',
-        '#value' => 'Получить ингредиент',
+        '#value' => t('Get ingredient'),
         '#ajax' => [
           'callback' => 'custom_timer_ajax_callback',
           'wrapper' => 'custom-timer-form',
@@ -374,7 +367,7 @@ function custom_catch_form($form, &$form_state) {
       ];
       $form['container']['cancel'] = [
         '#type' => 'button',
-        '#value' => 'Убрать наживку',
+        '#value' => t('Remove the bait'),
         '#ajax' => [
           'callback' => 'custom_catch_cancel_ajax_callback',
           'effect' => 'fade',
