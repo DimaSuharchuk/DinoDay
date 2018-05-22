@@ -57,7 +57,7 @@ function custom_food_form($form, &$form_state) {
       'title' => t('Bait Level 1'),
       'options' => $options_bait_1,
       'classes' => ['bait', 'bait-1'],
-      'message_if_null' => t('Baits of level 1 is not yet there. Select three any ingredients and click the Cook button.'),
+      'message_if_null' => t('Baits of level 1 is not yet there. Select three any ingredients and click the "Cook" button.'),
     ],
     'bait_2' => [
       'title' => t('Bait Level 2'),
