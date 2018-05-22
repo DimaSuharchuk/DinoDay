@@ -115,7 +115,7 @@ settings[zurb_foundation_top_bar_mobile_show_parent_link] = 1
 settings[zurb_foundation_tooltip_enable] = 1
 settings[zurb_foundation_tooltip_position] = 'top'
 settings[zurb_foundation_tooltip_mode] = 'text'
-settings[zurb_foundation_tooltip_text] = 'More information?'
+settings[zurb_foundation_tooltip_text] = 'More information'
 settings[zurb_foundation_tooltip_touch] = 0
 
 ; Styles and Scripts.

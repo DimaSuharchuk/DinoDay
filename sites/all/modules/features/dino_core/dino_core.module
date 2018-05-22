@@ -10,6 +10,39 @@
 define('DINO_THEME_NAME', 'dino');
 
 /**
+ * Implements hook_init().
+ */
+function dino_core_init() {
+  if (current_path() == "user") {
+    global $user;
+    if (user_is_logged_in()) {
+      drupal_goto('user/' . $user->uid . '/edit');
+    }
+    else {
+      drupal_goto('<front>');
+    }
+  }
+}
+
+/**
+ * Implements hook_menu_alter().
+ */
+function dino_core_menu_alter(&$items) {
+  $items['user']['type'] = MENU_CALLBACK;
+  $items['user/register']['type'] = MENU_CALLBACK;
+  $items['user/password']['type'] = MENU_CALLBACK;
+}
+
+/**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function dino_core_menu_local_tasks_alter(&$data, $router_item, $root_path) {
+  if ($root_path === 'user/%/edit') {
+    $data['tabs'] = [];
+  }
+}
+
+/**
  * Implements hook_block_info_alter().
  */
 function dino_core_block_info_alter(&$blocks, $theme, $code_blocks) {
@@ -58,4 +91,65 @@ function dino_core_schema_alter(&$schema) {
 function dino_core_mail_alter(&$message) {
   // Not need to send any emails for this project.
   $message['send'] = FALSE;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function dino_core_form_alter(&$form, &$form_state, $form_id) {
+  switch ($form_id) {
+    case 'user_login_block':
+      $form['links'] = [
+        '#type' => 'link',
+        '#title' => t('Create new account'),
+        '#href' => 'collection/nojs',
+        '#attributes' => [
+          'class' => [
+            'ctools-use-modal',
+            'ctools-modal-dino-popup',
+          ],
+        ],
+        '#prefix' => '<div class="register-link">',
+        '#suffix' => '</div>',
+      ];
+      $form['links']['#weight'] = 20;
+      $form['#attributes'] = [
+        'class' => ['authorization', 'columns', 'medium-6'],
+      ];
+      $form['actions']['#weight'] = 10;
+      break;
+
+    case 'user_register_form':
+      // Remove useless field email.
+      $form['account']['mail']['#access'] = FALSE;
+      // Dumb value will rewrite with {name}@user.com
+      // @see dino_core_user_presave().
+      $form['account']['mail']['#value'] = 'new@user.com';
+      // Hide other unnecessary text.
+      $form['account']['name']['#description'] = '';
+      $form['account']['pass']['#description'] = '';
+
+      $form['actions']['submit']['#ajax'] = [
+        'callback' => 'custom_user_register_ajax_callback',
+      ];
+      break;
+
+    case 'user_profile_form':
+      $form['account']['current_pass']['#description'] = '';
+
+      $form['account']['name']['#access'] = TRUE;
+      $form['account']['name']['#required'] = FALSE;
+      $form['account']['name']['#description'] = t('You can change the login without entering a password. You must enter a new login for next authorization.');
+      // Hide unnecessary field email.
+      $form['account']['mail']['#access'] = FALSE;
+      break;
+  }
+}
+
+/**
+ * Implements hook_user_presave().
+ */
+function dino_core_user_presave(&$edit, $account, $category) {
+  $prefix = $account->uid ? $account->uid : rand(0, PHP_INT_MAX);
+  $edit['mail'] = "{$prefix}@user.com";
 }
