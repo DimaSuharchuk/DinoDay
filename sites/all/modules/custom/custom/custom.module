@@ -238,6 +238,9 @@ function custom_timer_form($form, &$form_state) {
           'wrapper' => 'custom-timer-form',
           'progress' => FALSE,
         ],
+        '#attributes' => [
+          'class' => ['warning'],
+        ],
       ];
     }
     else {

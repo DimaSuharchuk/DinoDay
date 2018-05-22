@@ -16,7 +16,28 @@ a:focus {
     max-width: 100%;
 }
 
+/* Custom blocks. */
+.block-custom {
+    position: relative;
+    padding-left: 0.9375rem;
+    padding-right: 0.9375rem;
+    float: left;
+    width: 50%;
+}
+
 /* Timer. */
+.block-custom-timer {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.block-custom-timer button {
+    border-radius: 10px;
+    margin-bottom: -20px;
+}
+
 #custom-timer-form {
     text-align: center;
 }
@@ -133,6 +154,24 @@ a:focus {
     width: 75%;
     height: 75%;
     transform: rotate(-45deg);
+}
+
+.dinosaurs-table .no-rank {
+    animation-name: spin;
+    animation-duration: 10s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes spin {
+    0%, 90% {
+        transform: scale(1, 1) rotate(45deg)
+    }
+    100% {
+        box-shadow: 1px 1px 50px 40px rgba(255, 215, 0, .3) inset;
+        transform: scale(-1, 1) rotate(45deg)
+    }
 }
 
 /* Dinosaur info. */
