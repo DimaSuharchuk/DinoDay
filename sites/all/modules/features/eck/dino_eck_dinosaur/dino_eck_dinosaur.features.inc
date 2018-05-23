@@ -19,7 +19,6 @@ function dino_eck_dinosaur_eck_bundle_info() {
           'picture' => 'picture',
           'name' => 'name',
           'grade' => 'grade',
-          'lifetime' => 'lifetime',
           'food_type' => 'food_type',
           'favorite_food' => 'favorite_food',
         ),
@@ -50,11 +49,6 @@ function dino_eck_dinosaur_eck_entity_type_info() {
         ),
         'grade' => array(
           'label' => 'Grade',
-          'type' => 'integer',
-          'behavior' => 'integer',
-        ),
-        'lifetime' => array(
-          'label' => 'Lifetime',
           'type' => 'integer',
           'behavior' => 'integer',
         ),

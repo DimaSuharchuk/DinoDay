@@ -10,6 +10,14 @@
 define('DINO_THEME_NAME', 'dino');
 
 /**
+ * Defines dinosaurs lifetime in seconds.
+ */
+define('DINOSAUR_RANK_1_LIFETIME', 259200); // 3 days
+define('DINOSAUR_RANK_2_LIFETIME', 518400); // 6 days
+define('DINOSAUR_RANK_3_LIFETIME', 1036800); // 12 days
+define('DINOSAUR_RANK_4_LIFETIME', 2073600); // 24 days
+
+/**
  * Implements hook_init().
  */
 function dino_core_init() {
