@@ -35,14 +35,6 @@ function batch_items_menu() {
       'access arguments' => ['administer content'],
       'weight' => $weight++,
     ],
-    'admin/settings/site_settings' => [
-      'title' => 'Site settings',
-      'page callback' => 'drupal_get_form',
-      'page arguments' => ['site_settings_form'],
-      'access arguments' => ['administer content'],
-      'weight' => $weight++,
-      'file' => 'site_settings.inc',
-    ],
   ];
 }
 

@@ -59,6 +59,14 @@ function custom_menu() {
     'access callback' => TRUE,
     'weight' => $weight++,
   ];
+  $items['admin/settings/site_settings'] = [
+    'title' => 'Site settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => ['site_settings_form'],
+    'access arguments' => ['administer content'],
+    'weight' => 20,
+    'file' => 'site_settings.inc',
+  ];
 
   return $items;
 }
