@@ -12,6 +12,10 @@ define('DINO_PICTURE_DIR', drupal_get_path('theme', 'dino') . '/images/dino');
  * Defines path to directory with food pictures.
  */
 define('FOOD_PICTURE_DIR', drupal_get_path('theme', 'dino') . '/images/food');
+/**
+ * Defines path to directory with jurassic dinosaurs pictures.
+ */
+define('JURASSIC_PICTURE_DIR', drupal_get_path('theme', 'dino') . '/images/jurassic');
 
 /**
  * Defined this module path.
