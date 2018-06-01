@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400&subset=cyrillic');
 
 a:focus {
     outline: none;
@@ -312,10 +313,11 @@ a:focus {
 }
 
 /* Modal popups. */
-.ctools-modal-dino-popup {
+div.ctools-modal-dino-popup {
     border: none !important;
     border-radius: 30px !important;
     overflow: hidden;
+    box-shadow: 5px 5px 50px 10px rgba(0, 0, 0, .3);
 }
 
 #modalBackdrop .popup-close {
@@ -333,10 +335,17 @@ a:focus {
     flex-direction: row-reverse;
     align-items: center;
     padding: 0 20px;
+    background-color: orange;
+    box-shadow: -20px -5px 30px 0 rgba(0, 0, 0, .2) inset;
+    text-align: center;
+    font-size: 1.5em;
+    font-family: "Open Sans", "Segoe UI", "Helvetica", sans-serif;
 }
 
 #modalContent #modal-title {
     flex-grow: 1;
+    font-variant: petite-caps;
+    font-weight: 400;
 }
 
 #modalContent .close {
