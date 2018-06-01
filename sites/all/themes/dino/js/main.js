@@ -48,13 +48,19 @@
     Drupal.behaviors.animateFoodReward = {
         attach: function () {
             if ($('#food-reward-wrapper').find('img').length) {
-                $('#food-reward-wrapper img').animate({
-                    width: '300px',
-                    height: '300px',
-                    opacity: 0,
-                }, 3000, function () {
-                    $(this).remove()
-                })
+                if (window.location.pathname.indexOf('user') === 1) {
+                    // Remove food reward image on "user edit" page.
+                    $('#food-reward-wrapper img').remove();
+                } else {
+                    // On other pages show food reward animation.
+                    $('#food-reward-wrapper img').animate({
+                        width: '300px',
+                        height: '300px',
+                        opacity: 0,
+                    }, 3000, function () {
+                        $(this).remove();
+                    });
+                }
             }
         }
     };
