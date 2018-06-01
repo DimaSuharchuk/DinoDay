@@ -118,7 +118,6 @@ function batch_items_dinosaurs_batch($dinosaur, $operation_details, &$context) {
   $wrapper->picture->set($dinosaur['picture']);
   $wrapper->name->set($dinosaur['name']);
   $wrapper->grade->set($dinosaur['grade']);
-  $wrapper->lifetime->set($dinosaur['lifetime']);
   $wrapper->food_type->set($dinosaur['food_type']);
   $wrapper->favorite_food->set($dinosaur['favorite_food']);
   $wrapper->save();

@@ -71,4 +71,5 @@ function _update_global_variables() {
   variable_set('date_first_day', '1');
   // Cron settings.
   variable_set('cron_safe_threshold', 0);
+  variable_set('cron_key', 'l24j88pUOPV0CWJY5uGi2NAjfJcDyW7RAEZUk6NWTDs');
 }
