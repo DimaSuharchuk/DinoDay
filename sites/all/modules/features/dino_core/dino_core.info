@@ -22,3 +22,4 @@ dependencies[] = dino_entities
 ; Features.
 dependencies[] = dino_eck_dinosaur
 dependencies[] = dino_eck_food
+dependencies[] = dino_eck_jurassic

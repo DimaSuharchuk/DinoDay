@@ -24,6 +24,7 @@ define('BATCH_ITEMS_MODULE_PATH', drupal_get_path('module', 'batch_items'));
 
 require_once BATCH_ITEMS_MODULE_PATH . '/includes/dinosaurs.inc';
 require_once BATCH_ITEMS_MODULE_PATH . '/includes/food.inc';
+require_once BATCH_ITEMS_MODULE_PATH . '/includes/jurassic.inc';
 
 /**
  * Implements hook_menu().
@@ -53,6 +54,7 @@ function batch_items_menu() {
 function batch_items_form($form, &$form_state) {
   $dino_default_count = count(_get_dinosaurs());
   $food_default_count = count(_get_food());
+  $jurassic_default_count = count(_get_jurassic_dinosaurs());
 
   $result = db_select('eck_dinosaur', 'd')
     ->fields('d')
@@ -62,28 +64,38 @@ function batch_items_form($form, &$form_state) {
     ->fields('f')
     ->execute();
   $food_db_count = $result->rowCount();
+  $result = db_select('eck_jurassic', 'j')
+    ->fields('j')
+    ->execute();
+  $jurassic_db_count = $result->rowCount();
 
+  drupal_get_messages();
   drupal_set_message(t('@d dinosaurs in DB now.', ['@d' => $dino_db_count]));
   drupal_set_message(t('@f food in DB now.', ['@f' => $food_db_count]));
+  drupal_set_message(t('@j jurassic dinosaurs in DB now.', ['@j' => $jurassic_db_count]));
 
-  $form['start'] = [
+  $form['add'] = [
     '#type' => 'submit',
-    '#value' => t('Add dinosaurs and food'),
+    '#value' => t('Add dinosaurs, food and jurassic'),
+    '#submit' => ['batch_items_add'],
   ];
-  if ($dino_default_count <= $dino_db_count && $food_default_count <= $food_db_count) {
-    $form['start']['#disabled'] = TRUE;
+  if ($dino_default_count <= $dino_db_count && $food_default_count <= $food_db_count && $jurassic_default_count <= $jurassic_db_count) {
+    $form['add']['#disabled'] = TRUE;
   }
+
+  $form['remove'] = [
+    '#type' => 'submit',
+    '#value' => t('Remove all dinosaurs, food and jurassic'),
+    '#submit' => ['batch_items_remove'],
+  ];
 
   return $form;
 }
 
 /**
- * Batch form submit.
- *
- * @param $form
- * @param $form_state
+ * Add all dinosaurs, food and jurassic to DB from code.
  */
-function batch_items_form_submit($form, &$form_state) {
+function batch_items_add() {
   $operations = [];
 
   foreach (_get_dinosaurs() as $i => $dinosaur) {
@@ -100,6 +112,15 @@ function batch_items_form_submit($form, &$form_state) {
       'batch_items_food_batch',
       [
         $food,
+        t('(Operation @operation)', ['@operation' => $i]),
+      ],
+    ];
+  }
+  foreach (_get_jurassic_dinosaurs() as $i => $jurassic_dinosaur) {
+    $operations[] = [
+      'batch_items_jurassic_batch',
+      [
+        $jurassic_dinosaur,
         t('(Operation @operation)', ['@operation' => $i]),
       ],
     ];
@@ -144,6 +165,22 @@ function batch_items_food_batch($food, $operation_details, &$context) {
 }
 
 /**
+ * Batch operations with jurassic.
+ */
+function batch_items_jurassic_batch($jurassic, $operation_details, &$context) {
+  $entity = entity_create('jurassic', ['type' => 'jurassic']);
+  $wrapper = entity_metadata_wrapper('jurassic', $entity);
+  $wrapper->pictures->set(implode(',', $jurassic['pictures']));
+  $wrapper->name->set($jurassic['name']);
+  $wrapper->consume->set($jurassic['consume']);
+  $wrapper->description->set($jurassic['description']);
+  $wrapper->price->set($jurassic['price']);
+  $wrapper->save();
+
+  $context['results']['count']++;
+}
+
+/**
  * Batch finish function.
  *
  * @param $success
@@ -172,4 +209,13 @@ function batch_items_batch_finished($success, $results, $operations) {
       'error'
     );
   }
+}
+
+/**
+ * Remove all dinosaurs, food and jurassic from DB.
+ */
+function batch_items_remove() {
+  db_truncate('eck_dinosaur')->execute();
+  db_truncate('eck_food')->execute();
+  db_truncate('eck_jurassic')->execute();
 }

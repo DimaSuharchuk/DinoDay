@@ -16,7 +16,7 @@ function _get_jurassic_dinosaurs() {
   $jurassic = [];
 
   $jurassic[] = [
-    'picture' => [
+    'pictures' => [
       JURASSIC_PICTURE_DIR . '/aardonyx.jpg',
     ],
     'name' => 'Аардоникс',
@@ -35,7 +35,7 @@ function _get_jurassic_dinosaurs() {
     'price' => 60,
   ];
   $jurassic[] = [
-    'picture' => [
+    'pictures' => [
       JURASSIC_PICTURE_DIR . '/abelisaurus.jpg',
       JURASSIC_PICTURE_DIR . '/abelisaurus_1.jpg',
     ],
@@ -49,7 +49,7 @@ function _get_jurassic_dinosaurs() {
     'price' => 40,
   ];
   $jurassic[] = [
-    'picture' => [
+    'pictures' => [
       JURASSIC_PICTURE_DIR . '/abrictosaurus.png',
     ],
     'name' => 'Абриктозавр',
@@ -64,7 +64,7 @@ function _get_jurassic_dinosaurs() {
     'price' => 40,
   ];
   $jurassic[] = [
-    'picture' => [
+    'pictures' => [
       JURASSIC_PICTURE_DIR . '/avaceratops.png',
       JURASSIC_PICTURE_DIR . '/avaceratops_1.jpg',
       JURASSIC_PICTURE_DIR . '/avaceratops_2.jpg',
@@ -81,7 +81,7 @@ function _get_jurassic_dinosaurs() {
     'price' => 60,
   ];
   $jurassic[] = [
-    'picture' => [
+    'pictures' => [
       JURASSIC_PICTURE_DIR . '/avimimus.png',
       JURASSIC_PICTURE_DIR . '/avimimus_1.jpg',
     ],
@@ -95,7 +95,7 @@ function _get_jurassic_dinosaurs() {
     'price' => 40,
   ];
   $jurassic[] = [
-    'picture' => [
+    'pictures' => [
       JURASSIC_PICTURE_DIR . '/australovenator.jpg',
     ],
     'name' => 'Австраловенатор',
@@ -110,7 +110,7 @@ function _get_jurassic_dinosaurs() {
     'price' => 40,
   ];
   $jurassic[] = [
-    'picture' => [
+    'pictures' => [
       JURASSIC_PICTURE_DIR . '/austroraptor.jpg',
     ],
     'name' => 'Австрораптор',
@@ -123,7 +123,7 @@ function _get_jurassic_dinosaurs() {
     'price' => 30,
   ];
   $jurassic[] = [
-    'picture' => [
+    'pictures' => [
       JURASSIC_PICTURE_DIR . '/agathaumas.jpg',
     ],
     'name' => 'Агатаумас',
@@ -134,7 +134,7 @@ function _get_jurassic_dinosaurs() {
     'price' => 20,
   ];
   $jurassic[] = [
-    'picture' => [
+    'pictures' => [
       JURASSIC_PICTURE_DIR . '/agilisaurus.jpg',
       JURASSIC_PICTURE_DIR . '/agilisaurus_1.jpg',
     ],
@@ -146,7 +146,7 @@ function _get_jurassic_dinosaurs() {
     'price' => 10,
   ];
   $jurassic[] = [
-    'picture' => [
+    'pictures' => [
       JURASSIC_PICTURE_DIR . '/agnosphitys.jpg',
       JURASSIC_PICTURE_DIR . '/agnosphitys_1.gif',
     ],
