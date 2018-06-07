@@ -19,6 +19,7 @@ function dino_core_install() {
     'catch',
     'dinosaurs',
     'food',
+    'jurassic',
   ];
   foreach ($properties as $property) {
     if (!db_field_exists('users', $property)) {

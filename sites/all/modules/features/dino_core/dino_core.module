@@ -98,6 +98,12 @@ function dino_core_schema_alter(&$schema) {
     'not null' => FALSE,
     'description' => 'Food ID\'s received by user.',
   ];
+  $schema['users']['fields']['jurassic'] = [
+    'type' => 'text',
+    'size' => 'normal',
+    'not null' => FALSE,
+    'description' => 'Jurassic dinosaurs ID\'s received by user.',
+  ];
 }
 
 /**
