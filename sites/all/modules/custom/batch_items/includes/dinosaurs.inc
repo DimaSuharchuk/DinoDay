@@ -14,216 +14,246 @@ function _get_dinosaurs() {
 
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/1/alamozavr.svg',
-    'name' => 'Аламозавр',
+    'name' => 'Alamosaurus',
     'grade' => 1,
-    'food_type' => 'Фрукты',
-    'favorite_food' => 'Яблоко',
+    'food_type' => 'Fruits',
+    'favorite_food' => 'Apple',
+    'consume' => JURASSIC_CONSUME_HERB,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/1/amurozavr.svg',
-    'name' => 'Амурозавр',
+    'name' => 'Amurosaurus',
     'grade' => 1,
-    'food_type' => 'Морепродукты',
-    'favorite_food' => 'Лящ',
+    'food_type' => 'Seafood',
+    'favorite_food' => 'Fish',
+    'consume' => JURASSIC_CONSUME_MEAT,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/1/brahiozavr.svg',
-    'name' => 'Брахиозавр',
+    'name' => 'Brachiosaurus',
     'grade' => 1,
-    'food_type' => 'Мясо',
-    'favorite_food' => 'Бекон',
+    'food_type' => 'Meat',
+    'favorite_food' => 'Bacon',
+    'consume' => JURASSIC_CONSUME_MEAT,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/1/cherepozavr.svg',
-    'name' => 'Черепозавр',
+    'name' => 'Scaullcrouller',
     'grade' => 1,
-    'food_type' => 'Фрукты',
-    'favorite_food' => 'Фига',
+    'food_type' => 'Fruits',
+    'favorite_food' => 'Fig',
+    'consume' => JURASSIC_CONSUME_HERB,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/1/izizavr.svg',
-    'name' => 'Изизавр',
+    'name' => 'Easysaurus',
     'grade' => 1,
-    'food_type' => 'Морепродукты',
-    'favorite_food' => 'Осьминог',
+    'food_type' => 'Seafood',
+    'favorite_food' => 'Octopus',
+    'consume' => JURASSIC_CONSUME_MEAT,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/1/kusatops.svg',
-    'name' => 'Кусатопс',
+    'name' => 'Biteops',
     'grade' => 1,
-    'food_type' => 'Мясо',
-    'favorite_food' => 'Курочка',
+    'food_type' => 'Meat',
+    'favorite_food' => 'Chicken',
+    'consume' => JURASSIC_CONSUME_MEAT,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/1/mapuzavr.svg',
-    'name' => 'Мапузавр',
+    'name' => 'Mapusaurus',
     'grade' => 1,
-    'food_type' => 'Овощи',
-    'favorite_food' => 'Брокколи',
+    'food_type' => 'Vegetables',
+    'favorite_food' => 'Broccoli',
+    'consume' => JURASSIC_CONSUME_HERB,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/1/mimizavr.svg',
-    'name' => 'Мимизавр',
+    'name' => 'Mimisaurus',
     'grade' => 1,
-    'food_type' => 'Фрукты',
-    'favorite_food' => 'Груша',
+    'food_type' => 'Fruits',
+    'favorite_food' => 'Pear',
+    'consume' => JURASSIC_CONSUME_HERB,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/1/pamparaptor.svg',
-    'name' => 'Пампараптор',
+    'name' => 'Pamparaptor',
     'grade' => 1,
-    'food_type' => 'Морепродукты',
-    'favorite_food' => 'Лосось',
+    'food_type' => 'Seafood',
+    'favorite_food' => 'Salmon',
+    'consume' => JURASSIC_CONSUME_MEAT,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/1/pentidrako.svg',
-    'name' => 'Пентидрако',
+    'name' => 'Pentidraco',
     'grade' => 1,
-    'food_type' => 'Фрукты',
-    'favorite_food' => 'Ананас',
+    'food_type' => 'Fruits',
+    'favorite_food' => 'Pineapple',
+    'consume' => JURASSIC_CONSUME_HERB,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/1/plateozavr.svg',
-    'name' => 'Платеозавр',
+    'name' => 'Plateosaurus',
     'grade' => 1,
-    'food_type' => 'Мясо',
-    'favorite_food' => 'Окорок',
+    'food_type' => 'Meat',
+    'favorite_food' => 'Ham',
+    'consume' => JURASSIC_CONSUME_MEAT,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/1/tryceratops.svg',
-    'name' => 'Трицератопс',
+    'name' => 'Triceratops',
     'grade' => 1,
-    'food_type' => 'Морепродукты',
-    'favorite_food' => 'Креветка',
+    'food_type' => 'Seafood',
+    'favorite_food' => 'Shrimp',
+    'consume' => JURASSIC_CONSUME_MEAT,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/1/tsaraptor.svg',
-    'name' => 'Цараптор',
+    'name' => 'Ciraptor',
     'grade' => 1,
-    'food_type' => 'Мясо',
-    'favorite_food' => 'Стейк',
+    'food_type' => 'Meat',
+    'favorite_food' => 'Steak',
+    'consume' => JURASSIC_CONSUME_MEAT,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/1/tselur.svg',
-    'name' => 'Целюр',
+    'name' => 'Coelurus',
     'grade' => 1,
-    'food_type' => 'Овощи',
-    'favorite_food' => 'Капуста',
+    'food_type' => 'Vegetables',
+    'favorite_food' => 'Cabbage',
+    'consume' => JURASSIC_CONSUME_HERB,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/1/yamatseratops.svg',
-    'name' => 'Ямацератопс',
+    'name' => 'Yamaceratops',
     'grade' => 1,
-    'food_type' => 'Овощи',
-    'favorite_food' => 'Морковка',
+    'food_type' => 'Vegetables',
+    'favorite_food' => 'Carrot',
+    'consume' => JURASSIC_CONSUME_HERB,
   ];
   // 2
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/2/diplodoc.svg',
-    'name' => 'Диплодок',
+    'name' => 'Diplodocus',
     'grade' => 2,
-    'food_type' => 'Фрукты',
-    'favorite_food' => 'Яблоко',
+    'food_type' => 'Fruits',
+    'favorite_food' => 'Apple',
+    'consume' => JURASSIC_CONSUME_HERB,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/2/kapitozavr.svg',
-    'name' => 'Капитозавр',
+    'name' => 'Lollipopsis',
     'grade' => 2,
-    'food_type' => 'Фрукты',
-    'favorite_food' => 'Фига',
+    'food_type' => 'Fruits',
+    'favorite_food' => 'Fig',
+    'consume' => JURASSIC_CONSUME_HERB,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/2/lokozavr.svg',
-    'name' => 'Локозавр',
+    'name' => 'Locosaurus',
     'grade' => 2,
-    'food_type' => 'Фрукты',
-    'favorite_food' => 'Груша',
+    'food_type' => 'Fruits',
+    'favorite_food' => 'Pear',
+    'consume' => JURASSIC_CONSUME_HERB,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/2/minozavr.svg',
-    'name' => 'Минозавр',
+    'name' => 'Minosaurus',
     'grade' => 2,
-    'food_type' => 'Морепродукты',
-    'favorite_food' => 'Лящ',
+    'food_type' => 'Seafood',
+    'favorite_food' => 'Fish',
+    'consume' => JURASSIC_CONSUME_MEAT,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/2/multizavr.svg',
-    'name' => 'Мультизавр',
+    'name' => 'Multisaurus',
     'grade' => 2,
-    'food_type' => 'Морепродукты',
-    'favorite_food' => 'Осьминог',
+    'food_type' => 'Seafood',
+    'favorite_food' => 'Octopus',
+    'consume' => JURASSIC_CONSUME_MEAT,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/2/pentatseratops.svg',
-    'name' => 'Пентацератопс',
+    'name' => 'Pentaceratops',
     'grade' => 2,
-    'food_type' => 'Мясо',
-    'favorite_food' => 'Бекон',
+    'food_type' => 'Meat',
+    'favorite_food' => 'Bacon',
+    'consume' => JURASSIC_CONSUME_MEAT,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/2/stegozavr.svg',
-    'name' => 'Стегозавр',
+    'name' => 'Stegosaurus',
     'grade' => 2,
-    'food_type' => 'Овощи',
-    'favorite_food' => 'Томат',
+    'food_type' => 'Vegetables',
+    'favorite_food' => 'Tomato',
+    'consume' => JURASSIC_CONSUME_HERB,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/2/superzavr.svg',
-    'name' => 'Суперзавр',
+    'name' => 'Supersaurus',
     'grade' => 2,
-    'food_type' => 'Овощи',
-    'favorite_food' => 'Брокколи',
+    'food_type' => 'Vegetables',
+    'favorite_food' => 'Broccoli',
+    'consume' => JURASSIC_CONSUME_HERB,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/2/uranozavr.svg',
-    'name' => 'Уранозавр',
+    'name' => 'Uranosaurus',
     'grade' => 2,
-    'food_type' => 'Овощи',
-    'favorite_food' => 'Капуста',
+    'food_type' => 'Vegetables',
+    'favorite_food' => 'Cabbage',
+    'consume' => JURASSIC_CONSUME_HERB,
   ];
   $dinosaurs[] = [
-    'picture' => DINO_PICTURE_DIR . '/2/zahazmozavr.svg',
-    'name' => 'Захазмозавр',
+    'picture' => DINO_PICTURE_DIR . '/2/combozavr.svg',
+    'name' => 'Combosaurus',
     'grade' => 2,
-    'food_type' => 'Мясо',
-    'favorite_food' => 'Курочка',
+    'food_type' => 'Meat',
+    'favorite_food' => 'Chicken',
+    'consume' => JURASSIC_CONSUME_MEAT,
   ];
   // 3
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/3/brontozavr.svg',
-    'name' => 'Бронтозавр',
+    'name' => 'Apatosaurus',
     'grade' => 3,
-    'food_type' => 'Фрукты',
-    'favorite_food' => 'Ананас',
+    'food_type' => 'Fruits',
+    'favorite_food' => 'Pineapple',
+    'consume' => JURASSIC_CONSUME_HERB,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/3/shypast.svg',
-    'name' => 'Шипаст',
+    'name' => 'Spike',
     'grade' => 3,
-    'food_type' => 'Морепродукты',
-    'favorite_food' => 'Лосось',
+    'food_type' => 'Seafood',
+    'favorite_food' => 'Salmon',
+    'consume' => JURASSIC_CONSUME_MEAT,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/3/skalozavr.svg',
-    'name' => 'Скалозавр',
+    'name' => 'Scolosaurus',
     'grade' => 3,
-    'food_type' => 'Овощи',
-    'favorite_food' => 'Морковка',
+    'food_type' => 'Vegetables',
+    'favorite_food' => 'Carrot',
+    'consume' => JURASSIC_CONSUME_HERB,
   ];
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/3/tyranozavr.svg',
-    'name' => 'Тиранозавр',
+    'name' => 'Tyrannosaurus',
     'grade' => 3,
-    'food_type' => 'Мясо',
-    'favorite_food' => 'Окорок',
+    'food_type' => 'Meat',
+    'favorite_food' => 'Ham',
+    'consume' => JURASSIC_CONSUME_MEAT,
   ];
   // 4
   $dinosaurs[] = [
     'picture' => DINO_PICTURE_DIR . '/4/nanotyran.svg',
-    'name' => 'Нанотиран',
+    'name' => 'Nanotyrannus',
     'grade' => 4,
-    'food_type' => 'Мясо',
-    'favorite_food' => 'Стейк',
+    'food_type' => 'Meat',
+    'favorite_food' => 'Steak',
+    'consume' => JURASSIC_CONSUME_MEAT,
   ];
 
   return $dinosaurs;
