@@ -17,6 +17,8 @@ function dino_core_install() {
   $properties = [
     'timer',
     'catch',
+    'leaves',
+    'meat',
     'dinosaurs',
     'food',
     'jurassic',

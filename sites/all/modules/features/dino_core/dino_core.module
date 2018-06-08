@@ -86,6 +86,22 @@ function dino_core_schema_alter(&$schema) {
     'not null' => TRUE,
     'default' => 0,
   ];
+  $schema['users']['fields']['leaves'] = [
+    'description' => 'Leaves currency.',
+    'type' => 'int',
+    'unsigned' => TRUE,
+    'size' => 'small',
+    'not null' => TRUE,
+    'default' => 0,
+  ];
+  $schema['users']['fields']['meat'] = [
+    'description' => 'Meat currency.',
+    'type' => 'int',
+    'unsigned' => TRUE,
+    'size' => 'small',
+    'not null' => TRUE,
+    'default' => 0,
+  ];
   $schema['users']['fields']['dinosaurs'] = [
     'type' => 'text',
     'size' => 'normal',
