@@ -145,6 +145,7 @@ function batch_items_dinosaurs_batch($dinosaur, $operation_details, &$context) {
   $wrapper->grade->set($dinosaur['grade']);
   $wrapper->food_type->set($dinosaur['food_type']);
   $wrapper->favorite_food->set($dinosaur['favorite_food']);
+  $wrapper->consume->set($dinosaur['consume']);
   $wrapper->save();
 
   $context['results']['count']++;

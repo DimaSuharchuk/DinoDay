@@ -21,6 +21,7 @@ function dino_eck_dinosaur_eck_bundle_info() {
           'grade' => 'grade',
           'food_type' => 'food_type',
           'favorite_food' => 'favorite_food',
+          'consume' => 'consume',
         ),
       ),
     ),
@@ -59,6 +60,11 @@ function dino_eck_dinosaur_eck_entity_type_info() {
         ),
         'favorite_food' => array(
           'label' => 'Favorite food',
+          'type' => 'text',
+          'behavior' => 'textfield',
+        ),
+        'consume' => array(
+          'label' => 'Consume',
           'type' => 'text',
           'behavior' => 'textfield',
         ),
