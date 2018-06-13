@@ -188,32 +188,34 @@ function custom_food_ajax_callback($form, &$form_state) {
     return is_string($v);
   }, ARRAY_FILTER_USE_BOTH);
 
-  $user_food = explode(',', $user->food);
-  // Remove used food from DB.
-  foreach ($selected_food as $value) {
-    unset($user_food[$value]);
+  if (count($selected_food) === 3) {
+    $user_food = explode(',', $user->food);
+    // Remove used food from DB.
+    foreach ($selected_food as $value) {
+      unset($user_food[$value]);
+    }
+    // Add bait.
+    switch ($food_type) {
+      case 'food':
+        array_push($user_food, 17);
+        break;
+
+      case 'bait_1':
+        array_push($user_food, 18);
+        break;
+
+      case 'bait_2':
+        array_push($user_food, 19);
+        break;
+
+      case 'bait_3':
+        array_push($user_food, 20);
+        break;
+    }
+    $user->food = implode(',', $user_food);
+
+    user_save($user);
   }
-  // Add bait.
-  switch ($food_type) {
-    case 'food':
-      array_push($user_food, 17);
-      break;
-
-    case 'bait_1':
-      array_push($user_food, 18);
-      break;
-
-    case 'bait_2':
-      array_push($user_food, 19);
-      break;
-
-    case 'bait_3':
-      array_push($user_food, 20);
-      break;
-  }
-  $user->food = implode(',', $user_food);
-
-  user_save($user);
 
   $custom_food_form = drupal_get_form('custom_food_form');
   $commands = [];

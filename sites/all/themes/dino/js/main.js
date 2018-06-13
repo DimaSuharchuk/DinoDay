@@ -38,7 +38,7 @@
                         $('.cook-bait-button').mousedown();
                     });
                 } else {
-                    $('.cook-wrapper').removeClass('active');
+                    $('.cook-wrapper').removeClass('active').unbind();
                     $('.cook-wrapper input').attr('disabled', true);
                 }
             });
