@@ -170,7 +170,6 @@ a:focus {
         transform: scale(1, 1) rotate(45deg)
     }
     100% {
-        box-shadow: 1px 1px 30px 30px rgba(255, 215, 0, .3) inset;
         transform: scale(-1, 1) rotate(45deg)
     }
 }
