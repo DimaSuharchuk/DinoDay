@@ -21,5 +21,6 @@ dependencies[] = dino_entities
 
 ; Features.
 dependencies[] = dino_eck_dinosaur
-dependencies[] = dino_eck_food
+dependencies[] = dino_eck_consumables
 dependencies[] = dino_eck_jurassic
+dependencies[] = dino_settings_languages

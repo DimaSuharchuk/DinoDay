@@ -34,12 +34,12 @@
     Drupal.behaviors.alignPopup = {
         attach: function () {
             if ($('#modalContent').length) {
-                setTimeout(function () {
-                    modalContentResize();
-                    $('#modalBackdrop').css({height: '100%', width: '100%'});
-                }, 100);
                 // Prevent ugly page background scroll.
+                $(window).scrollTop(0);
                 $('body .page').css('position', 'fixed');
+
+                modalContentResize();
+                $('#modalBackdrop').css({height: '100%', width: '100%'});
             }
         }
     };

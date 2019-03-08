@@ -1,0 +1,159 @@
+/* Collection page. */
+
+.dinosaurs-table-top-element {
+  height: 60px;
+  background-image: url("/sites/all/themes/dino/images/table_top.svg");
+  background-size: contain;
+  background-position-x: center;
+  background-position-y: bottom;
+  background-repeat: no-repeat;
+}
+
+.dinosaurs-table {
+  margin-bottom: 30px;
+  padding: 10px;
+  border: 10px solid #5f9c74; // #4D8B63
+  border-radius: 10px;
+
+  &:before {
+    background-image: url("/sites/all/themes/dino/images/collection-bg.jpg");
+    background-size: cover;
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .3;
+    z-index: -2;
+  }
+
+  #edit-dinosaurs {
+    display: flex;
+    flex-wrap: wrap;
+    outline: 2px solid #5f9c74;
+
+    .form-item-dinosaurs {
+      margin: 0;
+      width: 16.667%;
+      border: 2px solid #5f9c74;
+
+      &:hover {
+        background-color: rgba(30, 144, 255, .1);
+      }
+
+      &.no-rank, &.rank-1, &.rank-2, &.rank-3, &.rank-4 {
+        position: relative;
+
+        &:before {
+          position: absolute;
+          content: "";
+          display: inline-block;
+          border-bottom: 20px solid transparent;
+          right: 0;
+          opacity: 0.7;
+        }
+      }
+
+      &.no-rank:before {
+        border-right: 20px solid #eee;
+      }
+
+      &.rank-1:before {
+        border-right: 20px solid lightgreen;
+      }
+
+      &.rank-2:before {
+        border-right: 20px solid dodgerblue;
+      }
+
+      &.rank-3:before {
+        border-right: 20px solid blueviolet;
+      }
+
+      &.rank-4:before {
+        border-right: 20px solid red;
+      }
+
+      &.no-rank {
+        img {
+          animation-name: spin;
+          animation-duration: 10s;
+          animation-direction: alternate;
+          animation-iteration-count: infinite;
+          animation-timing-function: ease-in-out;
+        }
+
+        @keyframes spin {
+          0%, 90% {
+            transform: scale(1, 1)
+          }
+          100% {
+            transform: scale(-1, 1)
+          }
+        }
+      }
+
+      input {
+        display: none;
+      }
+
+      label {
+        display: contents;
+      }
+
+      img {
+        padding: 5px;
+      }
+    }
+  }
+}
+
+
+/* Dinosaur info. */
+
+#dinosaur-info {
+  .dinosaur-rank {
+    padding-top: 100%;
+    border-radius: 100%;
+    position: relative;
+
+    &.rank-1 {
+      box-shadow: 1px 1px 75px 10px lightgreen inset;
+    }
+
+    &.rank-2 {
+      box-shadow: 1px 1px 75px 10px dodgerblue inset;
+    }
+
+    &.rank-3 {
+      box-shadow: 1px 1px 75px 10px blueviolet inset;
+    }
+
+    &.rank-4 {
+      box-shadow: 1px 1px 75px 10px red inset;
+    }
+
+    span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3em;
+    }
+  }
+
+  .dinosaur-attributes {
+    border-bottom: 1px solid #aaa;
+    padding-bottom: 5px;
+  }
+
+  .dinosaur-bars {
+    margin-top: 20px;
+  }
+
+  .dinosaur-picture-wrapper {
+    margin-top: 20px;
+  }
+}

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Collection page logic and view.
@@ -16,10 +17,16 @@ function custom_collection_page() {
 
   $page = [];
 
+  $page['collection_table_top'] = [
+    '#type' => 'container',
+    '#attributes' => [
+      'class' => ['dinosaurs-table-top-element', 'columns', 'medium-7'],
+    ],
+  ];
   $page['collection'] = [
     '#type' => 'container',
     '#attributes' => [
-      'class' => ['dinosaurs-table', 'columns', 'medium-6'],
+      'class' => ['dinosaurs-table', 'columns', 'medium-7'],
     ],
   ];
   $page['collection']['dinosaurs'] = drupal_get_form('custom_collection_form');
@@ -27,7 +34,7 @@ function custom_collection_page() {
   $page['dino_info_wrapper'] = [
     '#type' => 'container',
     '#attributes' => [
-      'class' => ['dinosaurs-info-block', 'columns', 'medium-6'],
+      'class' => ['dinosaurs-info-block', 'columns', 'medium-5'],
     ],
   ];
   $page['dino_info_wrapper']['dino_info'] = [
@@ -42,8 +49,10 @@ function custom_collection_page() {
 
 /**
  * Form with dinosaurs pictures as buttons.
+ *
+ * {@inheritdoc}
  */
-function custom_collection_form($form, &$from_state) {
+function custom_collection_form($form, &$form_state) {
   global $user;
 
   $user_dinosaurs = [];
@@ -71,7 +80,7 @@ function custom_collection_form($form, &$from_state) {
       $rank_style = _get_dinosaur_style_by_id($i);
     }
 
-    $options[$i++] = "<img src='{$value}' data-rank='{$rank_style}'/>";
+    $options[$i++] = "<img src='{$value}' data-rank='{$rank_style}' alt=''/>";
   }
 
   $form['dinosaurs'] = [
@@ -93,8 +102,7 @@ function custom_collection_form($form, &$from_state) {
 /**
  * Render chosen dinosaur info.
  *
- * @param $form
- * @param $form_state
+ * {@inheritdoc}
  *
  * @return string
  * @throws \Exception
@@ -108,15 +116,17 @@ function custom_dinosaur_info_ajax_callback($form, $form_state) {
   $dino_entity = entity_load_single('dinosaur', $dino_id);
 
   if (in_array($dino_id, array_keys($user_dinosaurs))) {
-    return theme('dinosaur_info', [
+    $dinosaur_info = theme('dinosaur_info', [
       'dinosaur_entity' => $dino_entity,
     ]);
   }
   else {
-    return theme('dinosaur_undefined_info', [
+    $dinosaur_info = theme('dinosaur_undefined_info', [
       'dinosaur_entity' => $dino_entity,
     ]);
   }
+
+  return "<div id='dinosaur-info'>{$dinosaur_info}</div>";
 }
 
 /**

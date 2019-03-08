@@ -28,7 +28,6 @@ base theme = zurb_foundation
 
 ; For CSS users, load the dino.css file:
 stylesheets[all][] = css/dino.css
-stylesheets[all][] = css/main.css
 stylesheets[all][] = css/nanoscroller.css
 
 ; Block loading of foundation.min.css from the base theme. This file should either
@@ -37,7 +36,6 @@ stylesheets[all][] = css/normalize.css
 stylesheets[all][] = css/foundation.min.css
 
 ; Foundation JavaScript.
-scripts[] = js/main.js
 scripts[] = js/jquery.nanoscroller.min.js
 
 ; External libraries used by Foundation (minified). Add more via Gruntfile.js.

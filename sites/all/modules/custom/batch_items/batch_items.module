@@ -1,30 +1,13 @@
 <?php
+
 /**
  * @file
- * Saving dinosaurs and food to DB.
+ * Saving dinosaurs, consumables and jurassic to DB.
  */
 
-/**
- * Defines path to directory with dinosaurs pictures.
- */
-define('DINO_PICTURE_DIR', drupal_get_path('theme', 'dino') . '/images/dino');
-/**
- * Defines path to directory with food pictures.
- */
-define('FOOD_PICTURE_DIR', drupal_get_path('theme', 'dino') . '/images/food');
-/**
- * Defines path to directory with jurassic dinosaurs pictures.
- */
-define('JURASSIC_PICTURE_DIR', drupal_get_path('theme', 'dino') . '/images/jurassic');
-
-/**
- * Defined this module path.
- */
-define('BATCH_ITEMS_MODULE_PATH', drupal_get_path('module', 'batch_items'));
-
-require_once BATCH_ITEMS_MODULE_PATH . '/includes/dinosaurs.inc';
-require_once BATCH_ITEMS_MODULE_PATH . '/includes/food.inc';
-require_once BATCH_ITEMS_MODULE_PATH . '/includes/jurassic.inc';
+module_load_include('inc', 'batch_items', 'includes/dinosaurs');
+module_load_include('inc', 'batch_items', 'includes/consumables');
+module_load_include('inc', 'batch_items', 'includes/jurassic');
 
 /**
  * Implements hook_menu().
@@ -46,24 +29,21 @@ function batch_items_menu() {
 /**
  * Form with button for batch starting.
  *
- * @param $form
- * @param $form_state
- *
- * @return mixed
+ * {@inheritdoc}
  */
 function batch_items_form($form, &$form_state) {
   $dino_default_count = count(_get_dinosaurs());
-  $food_default_count = count(_get_food());
+  $consumables_default_count = count(_get_consumables());
   $jurassic_default_count = count(_get_jurassic_dinosaurs());
 
   $result = db_select('eck_dinosaur', 'd')
     ->fields('d')
     ->execute();
   $dino_db_count = $result->rowCount();
-  $result = db_select('eck_food', 'f')
+  $result = db_select('eck_consumables', 'f')
     ->fields('f')
     ->execute();
-  $food_db_count = $result->rowCount();
+  $consumables_db_count = $result->rowCount();
   $result = db_select('eck_jurassic', 'j')
     ->fields('j')
     ->execute();
@@ -71,21 +51,21 @@ function batch_items_form($form, &$form_state) {
 
   drupal_get_messages();
   drupal_set_message(t('@d dinosaurs in DB now.', ['@d' => $dino_db_count]));
-  drupal_set_message(t('@f food in DB now.', ['@f' => $food_db_count]));
+  drupal_set_message(t('@c consumables in DB now.', ['@c' => $consumables_db_count]));
   drupal_set_message(t('@j jurassic dinosaurs in DB now.', ['@j' => $jurassic_db_count]));
 
   $form['add'] = [
     '#type' => 'submit',
-    '#value' => t('Add dinosaurs, food and jurassic'),
+    '#value' => t('Add dinosaurs, consumables and jurassic'),
     '#submit' => ['batch_items_add'],
   ];
-  if ($dino_default_count <= $dino_db_count && $food_default_count <= $food_db_count && $jurassic_default_count <= $jurassic_db_count) {
+  if ($dino_default_count <= $dino_db_count && $consumables_default_count <= $consumables_db_count && $jurassic_default_count <= $jurassic_db_count) {
     $form['add']['#disabled'] = TRUE;
   }
 
   $form['remove'] = [
     '#type' => 'submit',
-    '#value' => t('Remove all dinosaurs, food and jurassic'),
+    '#value' => t('Remove all dinosaurs, consumables and jurassic'),
     '#submit' => ['batch_items_remove'],
   ];
 
@@ -93,7 +73,7 @@ function batch_items_form($form, &$form_state) {
 }
 
 /**
- * Add all dinosaurs, food and jurassic to DB from code.
+ * Add all dinosaurs, consumables and jurassic to DB from files.
  */
 function batch_items_add() {
   $operations = [];
@@ -107,11 +87,11 @@ function batch_items_add() {
       ],
     ];
   }
-  foreach (_get_food() as $i => $food) {
+  foreach (_get_consumables() as $i => $consumable) {
     $operations[] = [
-      'batch_items_food_batch',
+      'batch_items_consumables_batch',
       [
-        $food,
+        $consumable,
         t('(Operation @operation)', ['@operation' => $i]),
       ],
     ];
@@ -136,30 +116,44 @@ function batch_items_add() {
 
 /**
  * Batch operations with dinosaurs.
+ *
+ * @param $dinosaur
+ *  Dinosaur info parsed from file.
+ * @param $operation_details
+ *  Batch iteration details.
+ * @param $context
+ *  Batch context.
  */
 function batch_items_dinosaurs_batch($dinosaur, $operation_details, &$context) {
   $entity = entity_create('dinosaur', ['type' => 'dinosaur']);
   $wrapper = entity_metadata_wrapper('dinosaur', $entity);
-  $wrapper->picture->set($dinosaur['picture']);
-  $wrapper->name->set($dinosaur['name']);
-  $wrapper->grade->set($dinosaur['grade']);
-  $wrapper->food_type->set($dinosaur['food_type']);
-  $wrapper->favorite_food->set($dinosaur['favorite_food']);
-  $wrapper->consume->set($dinosaur['consume']);
+  $wrapper->{'picture'}->set($dinosaur['picture']);
+  $wrapper->{'name'}->set($dinosaur['name']);
+  $wrapper->{'grade'}->set($dinosaur['grade']);
+  $wrapper->{'food_type'}->set($dinosaur['food_type']);
+  $wrapper->{'favorite_food'}->set($dinosaur['favorite_food']);
+  $wrapper->{'consume'}->set($dinosaur['consume']);
   $wrapper->save();
 
   $context['results']['count']++;
 }
 
 /**
- * Batch operations with food.
+ * Batch operations with consumables.
+ *
+ * @param $consumables
+ *  Consumable info parsed from file.
+ * @param $operation_details
+ *  Batch iteration details.
+ * @param $context
+ *  Batch context.
  */
-function batch_items_food_batch($food, $operation_details, &$context) {
-  $entity = entity_create('food', ['type' => 'food']);
-  $wrapper = entity_metadata_wrapper('food', $entity);
-  $wrapper->picture->set($food['picture']);
-  $wrapper->food_type->set($food['food_type']);
-  $wrapper->name->set($food['name']);
+function batch_items_consumables_batch($consumables, $operation_details, &$context) {
+  $entity = entity_create('consumables', ['type' => 'consumables']);
+  $wrapper = entity_metadata_wrapper('consumables', $entity);
+  $wrapper->{'picture'}->set($consumables['picture']);
+  $wrapper->{'consumable_type'}->set($consumables['consumable_type']);
+  $wrapper->{'name'}->set($consumables['name']);
   $wrapper->save();
 
   $context['results']['count']++;
@@ -167,15 +161,22 @@ function batch_items_food_batch($food, $operation_details, &$context) {
 
 /**
  * Batch operations with jurassic.
+ *
+ * @param $jurassic
+ *  Jurassic dinosaur's info parsed from file.
+ * @param $operation_details
+ *  Batch iteration details.
+ * @param $context
+ *  Batch context.
  */
 function batch_items_jurassic_batch($jurassic, $operation_details, &$context) {
   $entity = entity_create('jurassic', ['type' => 'jurassic']);
   $wrapper = entity_metadata_wrapper('jurassic', $entity);
-  $wrapper->pictures->set(implode(',', $jurassic['pictures']));
-  $wrapper->name->set($jurassic['name']);
-  $wrapper->consume->set($jurassic['consume']);
-  $wrapper->description->set($jurassic['description']);
-  $wrapper->price->set($jurassic['price']);
+  $wrapper->{'pictures'}->set(implode(',', $jurassic['pictures']));
+  $wrapper->{'name'}->set($jurassic['name']);
+  $wrapper->{'consume'}->set($jurassic['consume']);
+  $wrapper->{'description'}->set($jurassic['description']);
+  $wrapper->{'price'}->set($jurassic['price']);
   $wrapper->save();
 
   $context['results']['count']++;
@@ -184,9 +185,7 @@ function batch_items_jurassic_batch($jurassic, $operation_details, &$context) {
 /**
  * Batch finish function.
  *
- * @param $success
- * @param $results
- * @param $operations
+ * {@inheritdoc}
  */
 function batch_items_batch_finished($success, $results, $operations) {
   if ($success) {
@@ -213,10 +212,10 @@ function batch_items_batch_finished($success, $results, $operations) {
 }
 
 /**
- * Remove all dinosaurs, food and jurassic from DB.
+ * Remove all dinosaurs, consumables and jurassic from DB.
  */
 function batch_items_remove() {
   db_truncate('eck_dinosaur')->execute();
-  db_truncate('eck_food')->execute();
+  db_truncate('eck_consumables')->execute();
   db_truncate('eck_jurassic')->execute();
 }

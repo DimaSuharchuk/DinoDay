@@ -1,12 +1,13 @@
 <?php
+
 /**
  * @file
- * Statistics page logic and view.
+ * Leaderboard page logic and view.
  */
 
 /**
  * Statistics about player collections.
  */
-function custom_statistics_page() {
+function custom_leaderboard_page() {
   return 'Coming soon.';
 }

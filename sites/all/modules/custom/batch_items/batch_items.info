@@ -1,4 +1,4 @@
 name = DinoDay batch
-description = Saving dinosaurs and food to DB.
+description = Saving dinosaurs and consumables to DB.
 core = 7.x
 package = Custom

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Site configurations or global variables.

@@ -1,0 +1,8 @@
+name = Dino: ECK: Consumables
+core = 7.x
+package = Features
+dependencies[] = eck
+dependencies[] = features
+features[eck_bundle][] = consumables_consumables
+features[eck_entity_type][] = consumables
+features[features_api][] = api:2

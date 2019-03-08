@@ -1,1 +1,10 @@
-// Non-modular or client styles for the .l-content region.
+body {
+  .page {
+    width: 100%;
+  }
+}
+
+#page-title {
+  text-align: center;
+  margin: 20px 0 50px 0;
+}

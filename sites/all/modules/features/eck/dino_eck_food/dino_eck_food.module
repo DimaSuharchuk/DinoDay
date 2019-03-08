@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the Dino: ECK: Food feature.
- */
-
-include_once 'dino_eck_food.features.inc';

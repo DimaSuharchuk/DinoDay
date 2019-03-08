@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Catch dinosaurs functionality.
@@ -6,6 +7,8 @@
 
 /**
  * Implements hook_cronapi().
+ *
+ * {@inheritdoc}
  */
 function custom_cronapi($op, $job = NULL) {
   $items = [];
@@ -33,9 +36,9 @@ function custom_dinosaur_catch() {
     ->execute()
     ->fetchAllKeyed(0, 1);
 
-  foreach ($users_bait as $uid => $food_id /* bait id. */) {
+  foreach ($users_bait as $uid => $bait_id) {
     // Get new dino id if caught.
-    $id = _get_caught_dino_id($food_id);
+    $id = _get_caught_dino_id($bait_id);
     if ($id) {
       // Load current user who caught dino.
       $user = user_load($uid);
@@ -46,7 +49,8 @@ function custom_dinosaur_catch() {
         // Start stats.
         $dinosaur_info = [
           'caught' => time(),
-          'life' => 100,
+          'health' => 100,
+          'satiety' => 100,
           'mood' => 100,
         ];
 

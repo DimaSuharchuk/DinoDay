@@ -1,1 +1,113 @@
-// Non-modular or client styles for .l-header region.
+.block-custom-header {
+  position: relative;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2em;
+  border-top: 10px solid #5f9c74;
+  border-bottom: 10px solid #5f9c74;
+
+  &:before {
+    background-image: url("/sites/all/themes/dino/images/header-bg.jpg");
+    background-size: cover;
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .7;
+    z-index: -2;
+  }
+
+  button, button[disabled] {
+    all: unset;
+
+    &:focus {
+      all: unset;
+    }
+  }
+
+  .header-menu {
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+
+    li {
+      list-style: none;
+      display: inline-block;
+      margin-right: 30px;
+    }
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+    line-height: 0;
+
+    form {
+      display: inline-block;
+    }
+
+    #timer-wrapper {
+      display: inline-block;
+    }
+
+    span {
+      margin-left: 30px;
+    }
+  }
+
+  .icon {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+  }
+
+  .icon-collection {
+    background-image: url("/sites/all/themes/dino/images/icons/collection.svg");
+  }
+
+  .icon-inventory {
+    background-image: url("/sites/all/themes/dino/images/icons/inventory.svg");
+  }
+
+  .icon-jurassic {
+    background-image: url("/sites/all/themes/dino/images/icons/jurassic.svg");
+  }
+
+  .icon-quiz {
+    background-image: url("/sites/all/themes/dino/images/icons/quiz.svg");
+  }
+
+  .icon-settings {
+    background-image: url("/sites/all/themes/dino/images/icons/settings.svg");
+  }
+
+  .icon-leaderboard {
+    background-image: url("/sites/all/themes/dino/images/icons/leader.svg");
+  }
+
+  .icon-treasure {
+    background-image: url("/sites/all/themes/dino/images/icons/treasure.svg");
+  }
+
+  .icon-time {
+    background-image: url("/sites/all/themes/dino/images/icons/hourglass.svg");
+  }
+
+  .icon-meat {
+    background-image: url("/sites/all/themes/dino/images/icons/meat.svg");
+  }
+
+  .icon-leaves {
+    background-image: url("/sites/all/themes/dino/images/icons/leaves.svg");
+  }
+
+  .icon-energy {
+    background-image: url("/sites/all/themes/dino/images/icons/energy.svg");
+  }
+}

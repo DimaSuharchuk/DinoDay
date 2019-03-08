@@ -1,28 +1,11 @@
 <?php
+
 /**
  * @file
  * Module's main file.
  */
 
-/**
- * Defines site main theme name.
- */
-define('DINO_THEME_NAME', 'dino');
-
-/**
- * Defines dinosaurs lifetime in seconds.
- */
-define('DINOSAUR_RANK_1_LIFETIME', 259200); // 3 days
-define('DINOSAUR_RANK_2_LIFETIME', 518400); // 6 days
-define('DINOSAUR_RANK_3_LIFETIME', 1036800); // 12 days
-define('DINOSAUR_RANK_4_LIFETIME', 2073600); // 24 days
-
-/**
- * Defines jurassic dinosaurs feeding.
- */
-define('JURASSIC_CONSUME_MEAT', 'carnivore'); // Meat
-define('JURASSIC_CONSUME_HERB', 'herbivore'); // Herb, plants
-define('JURASSIC_CONSUME_ALL', 'omnivore'); // Meat, herb, plants
+module_load_include('inc', 'dino_core', 'constants');
 
 /**
  * Implements hook_init().
@@ -108,11 +91,11 @@ function dino_core_schema_alter(&$schema) {
     'not null' => FALSE,
     'description' => 'Dinosaurs ID\'s opened by user.',
   ];
-  $schema['users']['fields']['food'] = [
+  $schema['users']['fields']['consumables'] = [
     'type' => 'text',
     'size' => 'normal',
     'not null' => FALSE,
-    'description' => 'Food ID\'s received by user.',
+    'description' => 'Consumables ID\'s received by user.',
   ];
   $schema['users']['fields']['jurassic'] = [
     'type' => 'text',
@@ -124,6 +107,8 @@ function dino_core_schema_alter(&$schema) {
 
 /**
  * Implements hook_mail_alter().
+ *
+ * {@inheritdoc}
  */
 function dino_core_mail_alter(&$message) {
   // Not need to send any emails for this project.
@@ -132,6 +117,8 @@ function dino_core_mail_alter(&$message) {
 
 /**
  * Implements hook_form_alter().
+ *
+ * {@inheritdoc}
  */
 function dino_core_form_alter(&$form, &$form_state, $form_id) {
   switch ($form_id) {

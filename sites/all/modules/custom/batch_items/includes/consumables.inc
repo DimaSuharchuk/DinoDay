@@ -1,122 +1,123 @@
 <?php
+
 /**
  * @file
- * Food info for batch.
+ * Consumables info for batch.
  */
 
 /**
- * Helper function returns array with all food.
+ * Helper function returns array with all consumables.
  *
  * @return array
  */
-function _get_food() {
-  $food = [];
+function _get_consumables() {
+  $consumables = [];
 
   // Fish.
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/fish/fish.svg',
-    'food_type' => 'Морепродукты',
+    'consumable_type' => 'Морепродукты',
     'name' => 'Лящ',
   ];
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/fish/octopus.svg',
-    'food_type' => 'Морепродукты',
+    'consumable_type' => 'Морепродукты',
     'name' => 'Осьминог',
   ];
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/fish/salmon.svg',
-    'food_type' => 'Морепродукты',
+    'consumable_type' => 'Морепродукты',
     'name' => 'Лосось',
   ];
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/fish/shrimp.svg',
-    'food_type' => 'Морепродукты',
+    'consumable_type' => 'Морепродукты',
     'name' => 'Креветка',
   ];
   // Fruits.
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/fruits/apple.svg',
-    'food_type' => 'Фрукты',
+    'consumable_type' => 'Фрукты',
     'name' => 'Яблоко',
   ];
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/fruits/fig.svg',
-    'food_type' => 'Фрукты',
+    'consumable_type' => 'Фрукты',
     'name' => 'Фига',
   ];
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/fruits/pear.svg',
-    'food_type' => 'Фрукты',
+    'consumable_type' => 'Фрукты',
     'name' => 'Груша',
   ];
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/fruits/pineapple.svg',
-    'food_type' => 'Фрукты',
+    'consumable_type' => 'Фрукты',
     'name' => 'Ананас',
   ];
   // Meat.
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/meat/bacon.svg',
-    'food_type' => 'Мясо',
+    'consumable_type' => 'Мясо',
     'name' => 'Бекон',
   ];
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/meat/meat.svg',
-    'food_type' => 'Мясо',
+    'consumable_type' => 'Мясо',
     'name' => 'Курочка',
   ];
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/meat/meat-1.svg',
-    'food_type' => 'Мясо',
+    'consumable_type' => 'Мясо',
     'name' => 'Окорок',
   ];
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/meat/steak.svg',
-    'food_type' => 'Мясо',
+    'consumable_type' => 'Мясо',
     'name' => 'Стейк',
   ];
   // Vegetables.
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/vegetables/broccoli.svg',
-    'food_type' => 'Овощи',
+    'consumable_type' => 'Овощи',
     'name' => 'Брокколи',
   ];
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/vegetables/cabbage.svg',
-    'food_type' => 'Овощи',
+    'consumable_type' => 'Овощи',
     'name' => 'Капуста',
   ];
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/vegetables/carrot.svg',
-    'food_type' => 'Овощи',
+    'consumable_type' => 'Овощи',
     'name' => 'Морковка',
   ];
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/vegetables/tomato.svg',
-    'food_type' => 'Овощи',
+    'consumable_type' => 'Овощи',
     'name' => 'Томат',
   ];
   // Bait.
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/other/dish.svg',
-    'food_type' => 'Наживка',
+    'consumable_type' => 'Наживка',
     'name' => 'Наживка ур. I',
   ];
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/other/dish.svg',
-    'food_type' => 'Наживка',
+    'consumable_type' => 'Наживка',
     'name' => 'Наживка ур. II',
   ];
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/other/dish.svg',
-    'food_type' => 'Наживка',
+    'consumable_type' => 'Наживка',
     'name' => 'Наживка ур. III',
   ];
-  $food[] = [
+  $consumables[] = [
     'picture' => FOOD_PICTURE_DIR . '/other/dish.svg',
-    'food_type' => 'Наживка',
+    'consumable_type' => 'Наживка',
     'name' => 'Наживка ур. IV',
   ];
 
-  return $food;
+  return $consumables;
 }

@@ -1,46 +1,50 @@
 <?php
+
 /**
  * @file
- * Food page logic and view.
+ * Inventory page logic and view.
  */
 
 /**
- * Food page form.
+ * Inventory page form.
+ *
+ * {@inheritdoc}
+ * @throws \Exception
  */
-function custom_food_form($form, &$form_state) {
+function custom_inventory_form($form, &$form_state) {
   global $user;
 
-  $form['food_set'] = [
+  $form['inventory_set'] = [
     '#type' => 'container',
     '#attributes' => [
-      'class' => ['user-food-block', 'columns', 'medium-6'],
-      'id' => 'user-food-block',
+      'class' => ['user-inventory-block', 'columns', 'medium-6'],
+      'id' => 'user-inventory-block',
     ],
     '#tree' => TRUE,
   ];
 
-  $user_food_ids = explode(',', $user->food);
-  $food_entities = entity_load('food', $user_food_ids);
+  $user_consumables_ids = explode(',', $user->consumables);
+  $consumables_entities = entity_load('consumables', $user_consumables_ids);
 
-  $options_food = $options_bait_1 = $options_bait_2 = $options_bait_3 = $options_bait_4 = [];
-  foreach ($user_food_ids as $i => $id) {
-    if (key_exists($id, $food_entities)) {
-      $food_picture = "<img src='{$food_entities[$id]->picture}' />";
+  $options_consumables = $options_bait_1 = $options_bait_2 = $options_bait_3 = $options_bait_4 = [];
+  foreach ($user_consumables_ids as $i => $id) {
+    if (key_exists($id, $consumables_entities)) {
+      $consumable_picture = "<img src='{$consumables_entities[$id]->picture}' alt=''/>";
       switch ($id) {
         case '17':
-          $options_bait_1[$i] = $food_picture;
+          $options_bait_1[$i] = $consumable_picture;
           break;
         case '18':
-          $options_bait_2[$i] = $food_picture;
+          $options_bait_2[$i] = $consumable_picture;
           break;
         case '19':
-          $options_bait_3[$i] = $food_picture;
+          $options_bait_3[$i] = $consumable_picture;
           break;
         case '20':
-          $options_bait_4[$i] = $food_picture;
+          $options_bait_4[$i] = $consumable_picture;
           break;
         default:
-          $options_food[$i] = $food_picture;
+          $options_consumables[$i] = $consumable_picture;
       }
     }
   }
@@ -49,7 +53,7 @@ function custom_food_form($form, &$form_state) {
   $set_schema = [
     'food' => [
       'title' => t('Ingredients'),
-      'options' => $options_food,
+      'options' => $options_consumables,
       'classes' => ['food'],
       'message_if_null' => t('There are no ingredients yet, press the button at the top of the screen to get the ingredient.'),
     ],
@@ -79,7 +83,7 @@ function custom_food_form($form, &$form_state) {
     ],
   ];
   foreach ($set_schema as $type => $item) {
-    $form['food_set'][$type] = [
+    $form['inventory_set'][$type] = [
       '#type' => 'fieldset',
       '#title' => $item['title'],
       '#collapsible' => TRUE,
@@ -89,12 +93,12 @@ function custom_food_form($form, &$form_state) {
       ],
     ];
     if (!$item['options']) {
-      $form['food_set'][$type]['items'] = [
+      $form['inventory_set'][$type]['items'] = [
         '#markup' => $item['message_if_null'],
       ];
     }
     else {
-      $form['food_set'][$type]['items'] = [
+      $form['inventory_set'][$type]['items'] = [
         '#type' => 'checkboxes',
         '#options' => $item['options'],
       ];
@@ -121,7 +125,7 @@ function custom_food_form($form, &$form_state) {
     '#type' => 'button',
     '#value' => t('Cook a bait'),
     '#ajax' => [
-      'callback' => 'custom_food_ajax_callback',
+      'callback' => 'custom_inventory_ajax_callback',
       'effect' => 'fade',
       'progress' => FALSE,
     ],
@@ -159,67 +163,67 @@ function custom_food_form($form, &$form_state) {
 }
 
 /**
- * Food form ajax submit.
+ * Inventory form ajax submit.
  *
- * @param $form
- * @param $form_state
- *
- * @return array
+ * {@inheritdoc}
  * @throws \Exception
  */
-function custom_food_ajax_callback($form, &$form_state) {
+function custom_inventory_ajax_callback($form, &$form_state) {
   global $user;
 
-  // Fetch selected by user food ID's.
-  $food_sets = $form_state['values']['food_set'];
+  // Fetch selected by user consumables ID's.
+  $consumables_sets = $form_state['values']['inventory_set'];
 
   // Check what type of food or bait user crafts.
-  $food_type = '';
-  $selected_food = [];
-  foreach ($food_sets as $type => $set) {
+  $consumable_type = '';
+  $selected_consumables = [];
+  foreach ($consumables_sets as $type => $set) {
     if (count(array_filter($set['items']))) {
-      $selected_food = $set['items'];
-      $food_type = $type;
+      $selected_consumables = $set['items'];
+      $consumable_type = $type;
       break;
     }
   }
   // Filter from unnecessary values.
-  $selected_food = array_filter($selected_food, function ($v, $_) {
+  $selected_consumables = array_filter($selected_consumables, function ($v) {
     return is_string($v);
   }, ARRAY_FILTER_USE_BOTH);
 
-  if (count($selected_food) === 3) {
-    $user_food = explode(',', $user->food);
-    // Remove used food from DB.
-    foreach ($selected_food as $value) {
-      unset($user_food[$value]);
+  if (count($selected_consumables) === 3) {
+    $user_consumables = explode(',', $user->consumables);
+    // Remove used consumables from DB.
+    foreach ($selected_consumables as $value) {
+      unset($user_consumables[$value]);
     }
     // Add bait.
-    switch ($food_type) {
+    switch ($consumable_type) {
       case 'food':
-        array_push($user_food, 17);
+        array_push($user_consumables, 17);
         break;
 
       case 'bait_1':
-        array_push($user_food, 18);
+        array_push($user_consumables, 18);
         break;
 
       case 'bait_2':
-        array_push($user_food, 19);
+        array_push($user_consumables, 19);
         break;
 
       case 'bait_3':
-        array_push($user_food, 20);
+        array_push($user_consumables, 20);
         break;
     }
-    $user->food = implode(',', $user_food);
+    $user->consumables = implode(',', $user_consumables);
 
     user_save($user);
   }
 
-  $custom_food_form = drupal_get_form('custom_food_form');
+  $custom_inventory_form = drupal_get_form('custom_inventory_form');
   $commands = [];
-  $commands[] = ajax_command_replace('#custom-food-form', '<div id="custom-food-form">' . drupal_render($custom_food_form) . '</div>');
+  $commands[] = ajax_command_replace(
+    '#custom-inventory-form',
+    '<div id="custom-inventory-form">' . drupal_render($custom_inventory_form) . '</div>'
+  );
 
   return ['#type' => 'ajax', '#commands' => $commands];
 }
@@ -227,46 +231,49 @@ function custom_food_ajax_callback($form, &$form_state) {
 /**
  * Button set bait to catch.
  *
- * @param $form
- * @param $form_state
- *
- * @return array
+ * {@inheritdoc}
  * @throws \Exception
  */
 function custom_set_bait_ajax_callback($form, &$form_state) {
   global $user;
 
-  // Fetch selected by user food ID's.
-  $food_sets = $form_state['values']['food_set'];
+  // Fetch selected by user consumables ID's.
+  $consumables_sets = $form_state['values']['inventory_set'];
 
   // Check what type of food or bait user crafts.
-  $selected_food = [];
-  foreach ($food_sets as $type => $set) {
+  $selected_consumables = [];
+  foreach ($consumables_sets as $type => $set) {
     if (count(array_filter($set['items']))) {
-      $selected_food = $set['items'];
+      $selected_consumables = $set['items'];
       break;
     }
   }
   // Filter from unnecessary values.
-  $selected_food = array_filter($selected_food, function ($v, $_) {
+  $selected_consumables = array_filter($selected_consumables, function ($v) {
     return is_string($v);
   }, ARRAY_FILTER_USE_BOTH);
 
-  $user_food = explode(',', $user->food);
-  // Remove used food from DB.
-  foreach ($selected_food as $value) {
-    $user->catch = $user_food[$value];
-    unset($user_food[$value]);
+  $user_consumables = explode(',', $user->consumables);
+  // Remove used consumable from DB.
+  foreach ($selected_consumables as $value) {
+    $user->catch = $user_consumables[$value];
+    unset($user_consumables[$value]);
   }
-  $user->food = implode(',', $user_food);
+  $user->consumables = implode(',', $user_consumables);
 
   user_save($user);
 
   $custom_catch_form = drupal_get_form('custom_catch_form');
-  $custom_food_form = drupal_get_form('custom_food_form');
+  $custom_inventory_form = drupal_get_form('custom_inventory_form');
   $commands = [];
-  $commands[] = ajax_command_replace('#custom-catch-form', '<div id="custom-catch-form">' . drupal_render($custom_catch_form) . '</div>');
-  $commands[] = ajax_command_replace('#custom-food-form', '<div id="custom-food-form">' . drupal_render($custom_food_form) . '</div>');
+  $commands[] = ajax_command_replace(
+    '#custom-catch-form',
+    '<div id="custom-catch-form">' . drupal_render($custom_catch_form) . '</div>'
+  );
+  $commands[] = ajax_command_replace(
+    '#custom-inventory-form',
+    '<div id="custom-inventory-form">' . drupal_render($custom_inventory_form) . '</div>'
+  );
 
   return ['#type' => 'ajax', '#commands' => $commands];
 }
