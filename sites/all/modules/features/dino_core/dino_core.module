@@ -24,6 +24,8 @@ function dino_core_init() {
 
 /**
  * Implements hook_menu_alter().
+ *
+ * {@inheritdoc}
  */
 function dino_core_menu_alter(&$items) {
   $items['user']['type'] = MENU_CALLBACK;
@@ -33,6 +35,8 @@ function dino_core_menu_alter(&$items) {
 
 /**
  * Implements hook_menu_local_tasks_alter().
+ *
+ * {@inheritdoc}
  */
 function dino_core_menu_local_tasks_alter(&$data, $router_item, $root_path) {
   if ($root_path === 'user/%/edit') {
@@ -42,6 +46,8 @@ function dino_core_menu_local_tasks_alter(&$data, $router_item, $root_path) {
 
 /**
  * Implements hook_block_info_alter().
+ *
+ * {@inheritdoc}
  */
 function dino_core_block_info_alter(&$blocks, $theme, $code_blocks) {
   // Configure default blocks.
@@ -54,6 +60,8 @@ function dino_core_block_info_alter(&$blocks, $theme, $code_blocks) {
 
 /**
  * Implements hook_schema_alter().
+ *
+ * {@inheritdoc}
  */
 function dino_core_schema_alter(&$schema) {
   $schema['users']['fields']['timer'] = [
@@ -172,6 +180,8 @@ function dino_core_form_alter(&$form, &$form_state, $form_id) {
 
 /**
  * Implements hook_user_presave().
+ *
+ * {@inheritdoc}
  */
 function dino_core_user_presave(&$edit, $account, $category) {
   $prefix = $account->uid ? $account->uid : rand(0, PHP_INT_MAX);

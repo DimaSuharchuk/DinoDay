@@ -9,6 +9,8 @@ $plugin = [
 
 /**
  * Display field in edit form.
+ *
+ * {@inheritdoc}
  */
 function dino_entities_integer_property_entity_widget($property, $variables) {
   $bundle = $variables['entity']->type;
@@ -32,6 +34,8 @@ function dino_entities_integer_property_entity_widget($property, $variables) {
 
 /**
  * Display the property value on entity view.
+ *
+ * {@inheritdoc}
  */
 function dino_entities_integer_property_entity_formatter($property, $variables) {
   $element = [];

@@ -8,11 +8,15 @@
 
 /**
  * Implements hook_ctools_plugin_directory().
+ *
+ * {@inheritdoc}
  */
 function dino_entities_ctools_plugin_directory($owner, $plugin_type) {
   if ($owner == 'eck' && $plugin_type == 'property_behavior') {
     return 'plugins/' . $plugin_type;
   }
+
+  return NULL;
 }
 
 /**
@@ -27,6 +31,8 @@ function dino_entities_eck_property_types() {
 
 /**
  * Implements hook_eck_property_type_schema_alter().
+ *
+ * {@inheritdoc}
  */
 function dino_entities_eck_property_type_schema_alter(&$schema, $type) {
   switch ($type) {

@@ -117,7 +117,7 @@ function custom_register_popup($js) {
   ];
   $output = ctools_modal_form_wrapper('user_register_form', $form_state);
   print ajax_render($output);
-  drupal_exit();
+  exit();
 }
 
 /**
