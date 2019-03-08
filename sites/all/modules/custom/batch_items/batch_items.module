@@ -21,7 +21,7 @@ function batch_items_menu() {
       'page callback' => 'drupal_get_form',
       'page arguments' => ['batch_items_form'],
       'access arguments' => ['administer content'],
-      'weight' => $weight++,
+      'weight' => ++$weight,
     ],
   ];
 }
@@ -108,7 +108,6 @@ function batch_items_add() {
 
   $batch = [
     'operations' => $operations,
-    'finished' => 'batch_items_batch_finished',
   ];
 
   batch_set($batch);
@@ -123,19 +122,21 @@ function batch_items_add() {
  *  Batch iteration details.
  * @param $context
  *  Batch context.
+ *
+ * @throws \Exception
  */
 function batch_items_dinosaurs_batch($dinosaur, $operation_details, &$context) {
-  $entity = entity_create('dinosaur', ['type' => 'dinosaur']);
-  $wrapper = entity_metadata_wrapper('dinosaur', $entity);
+  $entity = new Entity(['type' => 'dinosaur'], 'dinosaur');
+  $wrapper = $entity->wrapper();
+
   $wrapper->{'picture'}->set($dinosaur['picture']);
   $wrapper->{'name'}->set($dinosaur['name']);
   $wrapper->{'grade'}->set($dinosaur['grade']);
   $wrapper->{'food_type'}->set($dinosaur['food_type']);
   $wrapper->{'favorite_food'}->set($dinosaur['favorite_food']);
   $wrapper->{'consume'}->set($dinosaur['consume']);
-  $wrapper->save();
 
-  $context['results']['count']++;
+  $entity->save();
 }
 
 /**
@@ -147,16 +148,18 @@ function batch_items_dinosaurs_batch($dinosaur, $operation_details, &$context) {
  *  Batch iteration details.
  * @param $context
  *  Batch context.
+ *
+ * @throws \Exception
  */
 function batch_items_consumables_batch($consumables, $operation_details, &$context) {
-  $entity = entity_create('consumables', ['type' => 'consumables']);
-  $wrapper = entity_metadata_wrapper('consumables', $entity);
+  $entity = new Entity(['type' => 'consumables'], 'consumables');
+  $wrapper = $entity->wrapper();
+
   $wrapper->{'picture'}->set($consumables['picture']);
   $wrapper->{'consumable_type'}->set($consumables['consumable_type']);
   $wrapper->{'name'}->set($consumables['name']);
-  $wrapper->save();
 
-  $context['results']['count']++;
+  $entity->save();
 }
 
 /**
@@ -168,47 +171,20 @@ function batch_items_consumables_batch($consumables, $operation_details, &$conte
  *  Batch iteration details.
  * @param $context
  *  Batch context.
+ *
+ * @throws \Exception
  */
 function batch_items_jurassic_batch($jurassic, $operation_details, &$context) {
-  $entity = entity_create('jurassic', ['type' => 'jurassic']);
-  $wrapper = entity_metadata_wrapper('jurassic', $entity);
+  $entity = new Entity(['type' => 'jurassic'], 'jurassic');
+  $wrapper = $entity->wrapper();
+
   $wrapper->{'pictures'}->set(implode(',', $jurassic['pictures']));
   $wrapper->{'name'}->set($jurassic['name']);
   $wrapper->{'consume'}->set($jurassic['consume']);
   $wrapper->{'description'}->set($jurassic['description']);
   $wrapper->{'price'}->set($jurassic['price']);
-  $wrapper->save();
 
-  $context['results']['count']++;
-}
-
-/**
- * Batch finish function.
- *
- * {@inheritdoc}
- */
-function batch_items_batch_finished($success, $results, $operations) {
-  if ($success) {
-    drupal_set_message(
-      format_plural(
-        $results['count'],
-        '1 element was created.',
-        '@count elements were created.'
-      )
-    );
-  }
-  else {
-    $error_operation = reset($operations);
-    drupal_set_message(
-      t('An error occurred while processing @operation with arguments : @args',
-        [
-          '@operation' => $error_operation[0],
-          '@args' => print_r($error_operation[0], TRUE),
-        ]
-      ),
-      'error'
-    );
-  }
+  $entity->save();
 }
 
 /**
